@@ -1,6 +1,17 @@
-const ord = ['bacon', 'chans', 'dator', 'fasad', 'glass', 'hemsk', 'jycke', 'kavel', 'lilja', 'melon']
+const ord = [
+    {ord: 'bacon', bokstäver: 'b' + 'a' + 'c' + 'o' + 'n'}, 
+    {ord: 'chans', bokstäver: 'c' + 'h' + 'a' + 'n' + 's'}, 
+    {ord: 'dator', bokstäver: 'd' + 'a' + 't' + 'o' + 'r'}, 
+    {ord: 'fasad', bokstäver: 'f' + 'a' + 's' + 'a' + 'd'}, 
+    {ord: 'glass', bokstäver: 'g' + 'l' + 'a' + 's' + 's'}, 
+    {ord: 'hemsk', bokstäver: 'h' + 'e' + 'm' + 's' + 'k'}, 
+    {ord: 'jycke', bokstäver: 'j' + 'y' + 'c' + 'k' + 'e'}, 
+    {ord: 'kavel', bokstäver: 'k' + 'a' + 'v' + 'e' + 'l'}, 
+    {ord: 'lilja', bokstäver: 'l' + 'i' + 'l' + 'j' + 'a'}, 
+    {ord: 'melon', bokstäver: 'm' + 'e' + 'l' + 'o' + 'n'} 
+];
 const startaNyOmgångKnapp = document.querySelector('#starta-ny-omgång-knapp');
-const alfabete = document.querySelectorAll('.alfabetet>button')
+const alfabete = document.querySelectorAll('.alfabetet>button');
 const ordetsBokstäver= [];
 const valdaBokstäver = [];
 const rättBokstäver = [];
@@ -11,13 +22,13 @@ const felBokstäver = [];
 //FUNKTIONEN SOM STARTAR NY SPELOMGÅNG GENOM ATT SLUMPA FRAM ETT ORD I ORD-LISTAN OCH SEDAN DELA UPP ORDET I BOKSTÄVER
 //SEDAN PUSHAS VARJE BOKSTAV TILL ORDETSBOKSTÄVER-LISTAN 
 let startaNyOmgång = () => {
-    slumpaOrd = Math.floor(Math.random()*10)
+    slumpaOrd = Math.floor(Math.random()*10);
     let nyttOrd=ord[slumpaOrd];
-    console.log(nyttOrd)
+    console.log(nyttOrd);
     nyttOrd=nyttOrd.toLowerCase().split('');
-    console.log(nyttOrd)
+    console.log(nyttOrd);
     nyttOrd.forEach((bokstav, index) => {
-        ordetsBokstäver.push(bokstav)
+        ordetsBokstäver.push(bokstav);
        // console.log(bokstav, index)
     })
 }
