@@ -1,15 +1,17 @@
-const ord = [
-    {ord: 'bacon', bokstäver: 'b' + 'a' + 'c' + 'o' + 'n'}, 
-    {ord: 'chans', bokstäver: 'c' + 'h' + 'a' + 'n' + 's'}, 
-    {ord: 'dator', bokstäver: 'd' + 'a' + 't' + 'o' + 'r'}, 
-    {ord: 'fasad', bokstäver: 'f' + 'a' + 's' + 'a' + 'd'}, 
-    {ord: 'glass', bokstäver: 'g' + 'l' + 'a' + 's' + 's'}, 
-    {ord: 'hemsk', bokstäver: 'h' + 'e' + 'm' + 's' + 'k'}, 
-    {ord: 'jycke', bokstäver: 'j' + 'y' + 'c' + 'k' + 'e'}, 
-    {ord: 'kavel', bokstäver: 'k' + 'a' + 'v' + 'e' + 'l'}, 
-    {ord: 'lilja', bokstäver: 'l' + 'i' + 'l' + 'j' + 'a'}, 
-    {ord: 'melon', bokstäver: 'm' + 'e' + 'l' + 'o' + 'n'} 
+// Orden som datorn kan välja 
+let ord = [
+    'bacon',
+    'chans',
+    'dator',
+    'fasad',
+    'glass',
+    'hemsk',
+    'jycke',
+    'kavel',
+    'lilja',
+    'melon'
 ];
+
 const startaNyOmgångKnapp = document.querySelector('#starta-ny-omgång-knapp');
 const alfabete = document.querySelectorAll('.alfabetet>button');
 const ordetsBokstäver= [];
@@ -36,9 +38,10 @@ let startaNyOmgång = () => {
 //FUNKTIONEN SOM GÖR OM DEN KNAPP/BOKSTAV SOM KLICKATS PÅ TILL LITEN BOKSTAV, SEDAN LOOPAR IGENOM ORDETS-BOKSTÄVER-LISTAN
 // VARJE BOKSTAV I LISTAN JÄMFÖRS MED DEN VALDA BOKSTAVEN, OM DE MATCHAR LÄGGS BOKSTAVEN TILL I RÄTTBOKSTÄVER-LISTAN
 //OM DE INTE MATCHAR LÄGGS BOKSTAVEN I FELBOKSTÄVER-LISTAN
-let valdBokstav = (event)=> {
+let valdBokstav = (event) => {
     let bokstav = event.target.innerText.toLowerCase()
     console.log('Vald bokstav är: ', bokstav)
+    
      ordetsBokstäver.forEach((ordetsBokstav) => {
         if(ordetsBokstav==bokstav) {
             console.log('ja')
