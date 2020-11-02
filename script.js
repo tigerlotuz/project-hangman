@@ -1,4 +1,4 @@
-const ord = ['Persika', 'Hus', 'Gammal', 'Sol', 'Kyckling', 'Pelikan', 'Rum', 'Kaka', 'Nallebjörn', 'Kvadrat']
+const ord = ['bacon', 'chans', 'dator', 'fasad', 'glass', 'hemsk', 'jycke', 'kavel', 'lilja', 'melon']
 const startaNyOmgångKnapp = document.querySelector('#starta-ny-omgång-knapp');
 const alfabete = document.querySelectorAll('.alfabetet>button')
 const ordetsBokstäver= [];
