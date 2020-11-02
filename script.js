@@ -27,17 +27,29 @@ let startaNyOmgång = () => {
 //OM DE INTE MATCHAR LÄGGS BOKSTAVEN I FELBOKSTÄVER-LISTAN
 let valdBokstav = (event)=> {
     let bokstav = event.target.innerText.toLowerCase()
+    let bokstavsmätare=0;
     console.log('Vald bokstav är: ', bokstav)
      ordetsBokstäver.forEach((ordetsBokstav) => {
         if(ordetsBokstav==bokstav) {
             console.log('ja')
-            rättBokstäver.forEach((rättBokstav))
             rättBokstäver.push(bokstav)
-        } else {
+        } 
+         else {
             console.log('nej')
             felBokstäver.push(bokstav)
-        }
+        } 
+        
     }) 
+    displayRättBokstäver();
+    displayFelBokstäver();
+}
+
+let displayRättBokstäver=() => {
+    console.log(rättBokstäver)
+}
+let displayFelBokstäver=() => {
+    felBokstäver.sort()
+    console.log(felBokstäver)
 }
 
 //STARTAR NY SPELOMGÅNG GENOM ATT SLUMPA FRAM ETT ORD UR ORD-LISTAN
@@ -47,6 +59,4 @@ startaNyOmgångKnapp.addEventListener('click', startaNyOmgång);
 //VID KLICK STARTAR FUNKTIONEN "VALDBOKSTAV"
 alfabete.forEach((bokstav) => {
     bokstav.addEventListener('click', valdBokstav);
-    console.log(rättBokstäver)
-    console.log(felBokstäver)
 })
