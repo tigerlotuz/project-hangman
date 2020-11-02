@@ -1,0 +1,45 @@
+
+
+/* Body */
+body {
+    width: 1000px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+/* Fonts */
+
+
+/* Buttons */
+main > button {
+    width: 10rem;
+    height: 4rem;
+    margin-bottom: 1rem;
+}
+.alfabetet > button {
+    width: 4rem;
+    height: 4rem; 
+    margin: .5rem; 
+}
+
+/* Header */
+header > figure {
+    padding: 0;
+    margin: 0;
+}
+
+header > figure > img {
+    width: 100%;
+}
+
+/* Main */
+main {
+    padding: 1rem;
+}
+
+/* Footer */
+footer {
+    width: 100%;
+    height: 4rem;
+    background-color: black;
+}
