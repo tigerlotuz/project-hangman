@@ -20,6 +20,7 @@ let linjer = [
     '_'
 ]
 
+//linjer=linjer.join(' ')
 
 const startaNyOmgångKnapp = document.querySelector('#starta-ny-omgång-knapp');
 const alfabete = document.querySelectorAll('.alfabetet>button');
@@ -40,7 +41,7 @@ const legs = document.getElementById('legs');
 const scaffold = document.getElementById('scaffold');
 const svgHelaBilden = document.querySelectorAll('.svg-hela>.barn');
 
-function    getAllIndexes(ordetsBokstäver, bokstav) {
+function getAllIndexes(ordetsBokstäver, bokstav) {
     let indexes = [], i;
     for (i=0; i <ordetsBokstäver.length; i++) 
         if (ordetsBokstäver[i]==bokstav)
@@ -49,13 +50,17 @@ function    getAllIndexes(ordetsBokstäver, bokstav) {
             return indexes
 }
 
-rättGissadeBokstäverSynas.innerHTML = linjer;
+
 
 
 let displayRättBokstäver = (bokstav) => {
-    console.log(rättBokstäver)
-    getAllIndexes(ordetsBokstäver, bokstav)
-    linjer.splice(getAllIndexes, 1, bokstav)
+    rättGissadeBokstäverSynas.innerHTML = linjer;
+    console.log(`Rätt bokstäver är: ${ordetsBokstäver}, rätt gissade bokstäver är: ${rättBokstäver}`)
+    let korrektaIndex=getAllIndexes(ordetsBokstäver, bokstav)
+    console.log(`Index av rätt gissad bokstav ${bokstav.toUpperCase()} i detta varv är är ${korrektaIndex}, det är alltså DETTA/DESSA INDEX vi vill byta ut mot ${bokstav.toUpperCase()}.`)
+    linjer.splice(korrektaIndex, 1, bokstav)
+    rättGissadeBokstäverSynas.innerHTML=linjer;
+    console.log(linjer)
     /*  rättBokstäver.forEach((bokstav) => {
          let bokstavsIndex=ordetsBokstäver.indexOf(bokstav)
         console.log( bokstav, ordetsBokstäver.indexOf(bokstav))
