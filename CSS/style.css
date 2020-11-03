@@ -16,6 +16,8 @@ main > button {
     width: 10rem;
     height: 4rem;
     margin-bottom: 1rem;
+    background-color: white;
+
 }
 .alfabetet {
     display: flex;
@@ -89,3 +91,12 @@ footer {
 .synlig {
     opacity: 0;
 }
+
+
+/* 
+.animering-transform {
+    background-color: teal;
+    border: 1px solid teal;
+    color: rgba(255, 255, 255, 0);
+    transition: all 1s linear 1s;
+} */
