@@ -20,7 +20,6 @@ let linjer = [
     '_'
 ]
 
-//linjer=linjer.join(' ')
 
 const startaNyOmgångKnapp = document.querySelector('#starta-ny-omgång-knapp');
 const alfabete = document.querySelectorAll('.alfabetet>button');
@@ -58,7 +57,12 @@ let displayRättBokstäver = (bokstav) => {
     console.log(`Rätt bokstäver är: ${ordetsBokstäver}, rätt gissade bokstäver är: ${rättBokstäver}`)
     let korrektaIndex=getAllIndexes(ordetsBokstäver, bokstav)
     console.log(`Index av rätt gissad bokstav ${bokstav.toUpperCase()} i detta varv är är ${korrektaIndex}, det är alltså DETTA/DESSA INDEX vi vill byta ut mot ${bokstav.toUpperCase()}.`)
-    linjer.splice(korrektaIndex, 1, bokstav)
+    //SPLICE PÅ FÖRSTA AV VARJE BOKSTAV
+    linjer.splice(korrektaIndex[0], 1, bokstav)
+    //OM FLER AV SAMMA BOKSTÄVER, SPLICE PÅ ANDRA
+    if(korrektaIndex[1]){ 
+        linjer.splice(korrektaIndex[1], 1, bokstav)
+    }
     rättGissadeBokstäverSynas.innerHTML=linjer;
     console.log(linjer)
     /*  rättBokstäver.forEach((bokstav) => {
@@ -81,7 +85,7 @@ let displayRättBokstäver = (bokstav) => {
     } */
 }
 let displayFelBokstäver = () => {
-    felBokstäver.forEach((bokstav, index) => {
+    felBokstäver.forEach((bokstav) => {
         svgHelaBilden.forEach((del, index) => {
             if (index == felBokstäver.indexOf(bokstav)){
                 console.log('yes', index)
@@ -110,7 +114,7 @@ let startaNyOmgång = () => {
 }
 
 
-//KOLLAR IGENOM BOKSTÄVERNA I ORDET OCH RÄKNAR IFALL DET FINNS FLER ÄN 1, OM FLER ÄN 1: BOKSTAVSRÄKAREN == 1
+/* //KOLLAR IGENOM BOKSTÄVERNA I ORDET OCH RÄKNAR IFALL DET FINNS FLER ÄN 1, OM FLER ÄN 1: BOKSTAVSRÄKAREN == 1
 let kollaDubbletter=()=> {
    let sorteradeBokstäver = ordetsBokstäver.sort();
     console.log(sorteradeBokstäver)
@@ -121,7 +125,7 @@ let kollaDubbletter=()=> {
             console.log(bokstavsRäknare)
     }
    })
-}
+} */
 
 //FUNKTIONEN SOM GÖR OM DEN KNAPP/BOKSTAV SOM KLICKATS PÅ TILL LITEN BOKSTAV, SEDAN LOOPAR IGENOM ORDETS-BOKSTÄVER-LISTAN
 // VARJE BOKSTAV I LISTAN JÄMFÖRS MED DEN VALDA BOKSTAVEN, OM DE MATCHAR LÄGGS BOKSTAVEN TILL I RÄTTBOKSTÄVER-LISTAN
@@ -155,6 +159,7 @@ let valdBokstav = (event) => {
     console.log(`Fel bokstäver: ${felBokstäver}`) */
     
     displayFelBokstäver();
+    event.target.removeEventListener('click', valdBokstav)
 }
 
 
