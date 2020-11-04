@@ -41,6 +41,7 @@ header > figure {
 
 header > figure > img {
     width: 100%;
+    opacity: 0.6;
 }
 
 /* Main */
@@ -78,6 +79,13 @@ footer {
     background-color: black;
 }
 
+
+.hero {
+    background-color: #423280;
+
+}
+
+
 .klickad {
     opacity: 0.5;
 }
@@ -85,5 +93,32 @@ footer {
 .synlig {
     fill: #423280;
     stroke: #423280;
+    fill: #261f3f;
+    stroke: #261f3f;
+    
     transition: all .3s ease-in;
+}
+
+
+.anvanda-bokstaver {
+    transition: 2s ease-in-out .5s;
+}
+
+.game-over {
+    background-color: rgb(114, 112, 112);
+    position: relative;
+}
+
+
+.game-over::before {
+    content: 'GAME OVER!';
+    font-size: 3rem;
+    color: rgb(141, 9, 9);
+    text-shadow: 0px 2px 2px #fff;
+    position: absolute;
+    width: 100%;
+    text-align: center;
+    top: 3rem;
+    height: auto;
+    z-index: 999;
 }

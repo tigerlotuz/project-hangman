@@ -57,6 +57,54 @@ function getAllIndexes(ordetsBokstäver, bokstav) {
 poängräknareCount=0;
 antalspelOmgångar=0;
 
+
+        
+ //TAR BORT HÄNGA-GUBBE-SVG:N
+ let taBortSvg = () => {
+    setTimeout(() => {
+       svgHelaBilden.forEach((del) => {
+           if (del.classList.contains('synlig')){
+               del.classList.remove('synlig')
+           }  
+       }); 
+    }, 2000);
+    }
+       
+
+
+//NOLLSTÄLLNINGSFUNKTION, NOLLSTÄLLER SPELPLAN EFTER VUNNEN/FÖRLORAD OMGÅNG
+
+let nollställOmgång = () => {
+    //NOLLSTÄLL BOKSTAVS-ARRAYS OCH LINJE-ARRAY
+    ordetsBokstäver=[];
+    valdaBokstäver = [];
+    rättBokstäver = [];
+    felBokstäver = [];
+    linjer = [
+        '__',
+        '__',
+        '__',
+        '__',
+        '__'
+    ];
+    //EFTER 1 SEKUND NOLLSTÄLLS BOKSTÄVER TILL LINJER IGEN
+    setTimeout(() => {
+    rättGissadeBokstäverSynas.innerHTML = linjer.join(' ');
+    }, 1000);
+    //TAR BORT KLICKAD-CLASS SÅ ATT DET GÅR ATT KLICKA PÅ BOKSTÄVERNA I NÄSTA SPELOMGÅNG
+    alfabete.forEach((bokstav) => {
+        bokstav.classList.remove('klickad');
+    })
+    //TAR BORT GAME-OVER-CLASS PÅ SVG:N (BAKGRUNDSFÄRG OCH GAME-OVER-TEXT)
+    setTimeout(() => {
+        felGissadeBokstäverSynas.classList.remove('game-over');
+    }, 2500);
+    //TAR BORT SJÄLVA SVG-BILDEN
+    taBortSvg();
+};
+
+
+
 function displayRättBokstäver(bokstav) {
     rättGissadeBokstäverSynas.innerHTML = linjer;
     console.log(`Rätt bokstäver är: ${ordetsBokstäver}, rätt gissade bokstäver är: ${rättBokstäver}`);
@@ -81,31 +129,12 @@ function displayRättBokstäver(bokstav) {
         poängräknareCount++;
         antalspelOmgångar++;    
         poängräknare.innerHTML=`Poäng: ${poängräknareCount} / ${antalspelOmgångar}`
-    //VISAR RÄTT BOKSTÄVER I HTML:EN OCH TAR BORT KOMMATECKNEN MELLAN VARJE BOKSTAV
-    rättGissadeBokstäverSynas.innerHTML = linjer.join(' ');
-    //ANAMERING- TAR BORT BOKSTÄVER EFTER ATT SPELAREN VUNNIT    
-      animering();
-
-    //NOLLSTÄLL BOKSTAVS-ARRAYS OCH LINJE-ARRAY
-    ordetsBokstäver=[];
-    valdaBokstäver = [];
-    rättBokstäver = [];
-    felBokstäver = [];
-    linjer = [
-        '__',
-        '__',
-        '__',
-        '__',
-        '__'
-    ];
-    //EFTER 1 SEKUND NOLLSTÄLLS BOKSTÄVER TILL LINJER IGEN
-    setTimeout(() => {
-    rättGissadeBokstäverSynas.innerHTML = linjer.join(' ');
-    }, 1000);
-    //TAR BORT KLICKAD-CLASS SÅ ATT DET GÅR ATT KLICKA PÅ BOKSTÄVERNA I NÄSTA SPELOMGÅNG
-    alfabete.forEach((bokstav) => {
-        bokstav.classList.remove('klickad');
-    })
+        //ANAMERING- TAR BORT BOKSTÄVER EFTER ATT SPELAREN VUNNIT    
+        animering()  
+        //NOLLSTÄLLER SPELPLANEN FÖR NÄSTA OMGÅNG
+        nollställOmgång()
+        //VISAR RÄTT BOKSTÄVER I HTML:EN OCH TAR BORT KOMMATECKNEN MELLAN VARJE BOKSTAV
+        rättGissadeBokstäverSynas.innerHTML = linjer.join(' ');
     }
 }
 
@@ -124,6 +153,9 @@ function displayRättBokstäver(bokstav) {
 
 
 let displayFelBokstäver = () => {
+    //RÄKNAR ANTAL FEL
+    let antalFel=0;
+    //FÖR VARJE FEL BOKSTAV BLIR EN DEL AV SVG:N SYNLIG
     felBokstäver.forEach((bokstav) => {
         svgHelaBilden.forEach((del, index) => {
             if (index == felBokstäver.indexOf(bokstav)){
@@ -134,7 +166,25 @@ let displayFelBokstäver = () => {
                 console.log('no', index);
             }
         })
-    })
+    //FÖR VARJE FEL BOKSTAV RÄKNAS ANTALET FEL UPP
+        svgHelaBilden.forEach((part, index)=>{
+                if (part.classList.contains('synlig'))
+                    antalFel=index;
+                    console.log(antalFel)
+        })
+        console.log(`Antal fel: ${antalFel}`)
+
+    //OM ANTAL FEL ÄR 5 SÅ ÄR HELA SVG:N SYNLIG OCH GUBBEN ÄR HÄNGD => GAME OVER 
+        if(antalFel==5) {
+            //UPPDATERAR RÄKNAREN FÖR ANTAL SPELOMGÅNGAR
+            antalspelOmgångar++;    
+            poängräknare.innerHTML=`Poäng: ${poängräknareCount} / ${antalspelOmgångar}`
+            //ÄNDRAR BAKGRUNDSFÄRG OCH LÄGGER TILL TEXTEN "GAME OVER!" NÄR GUBBEN ÄR HÄNGD
+            felGissadeBokstäverSynas.classList.add('game-over')
+            //NOLLSTÄLLER SPELPLANEN FÖR NÄSTA OMGÅNG
+            nollställOmgång();
+        }
+    })   
 }
 
 //FUNKTIONEN SOM STARTAR NY SPELOMGÅNG GENOM ATT SLUMPA FRAM ETT ORD I ORD-LISTAN OCH SEDAN DELA UPP ORDET I BOKSTÄVER
@@ -179,9 +229,7 @@ let valdBokstav = (event) => {
     if(bokstavsmätare==0) {
         felBokstäver.push(bokstav)
     }
-    
     displayFelBokstäver();
-   // event.target.removeEventListener('click', valdBokstav)
 }
 
 
