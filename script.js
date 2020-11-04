@@ -1,3 +1,5 @@
+
+
 // Orden som datorn kan välja 
 let ord = [
     'bacon',
@@ -23,13 +25,14 @@ let linjer = [
 const startaNyOmgångKnapp = document.querySelector('#starta-ny-omgång-knapp');
 const alfabete = document.querySelectorAll('.alfabetet>button');
 const alfabetetSection = document.querySelector('.alfabetet');
-const ordetsBokstäver= [];
-const valdaBokstäver = [];
-const rättBokstäver = [];
-const felBokstäver = [];
+let ordetsBokstäver= [];
+let valdaBokstäver = [];
+let rättBokstäver = [];
+let felBokstäver = [];
 const rättGissadeBokstäverSynas = document.querySelector('.ratt-gissade-bokstaver');
 const rättGissadBokstäverBoxLista = document.querySelectorAll('.ratt-gissade-bokstaver>article');
 const felGissadeBokstäverSynas = document.querySelector('.anvanda-bokstaver');
+const poängräknare = document.querySelector('#poangraknare');
 
 //SVG-BILD-DELAR
 const ground = document.getElementById('ground');
@@ -40,6 +43,7 @@ const legs = document.getElementById('legs');
 const scaffold = document.getElementById('scaffold');
 const svgHelaBilden = document.querySelectorAll('.svg-hela>.barn');
 
+
 function getAllIndexes(ordetsBokstäver, bokstav) {
     let indexes = [], i;
     for (i=0; i <ordetsBokstäver.length; i++) 
@@ -49,16 +53,9 @@ function getAllIndexes(ordetsBokstäver, bokstav) {
             return indexes
 }
 
-/*   
-let slutAnimation= anime({
-    targets: '.staggering-grid-demo .el',
-    scale: [
-      {value: .1, easing: 'easeOutSine', duration: 500},
-      {value: 1, easing: 'easeInOutQuad', duration: 1200}
-    ],
-    delay: anime.stagger(200, {grid: [6, 5], from: 'center'})
-  }); */
-
+//POÄNG-RÄKNARE OCH OMGÅNGS-RÄKNARE BÖRJAR FRÅN 0
+poängräknareCount=0;
+antalspelOmgångar=0;
 
 function displayRättBokstäver(bokstav) {
     rättGissadeBokstäverSynas.innerHTML = linjer;
@@ -66,11 +63,11 @@ function displayRättBokstäver(bokstav) {
     let korrektaIndex = getAllIndexes(ordetsBokstäver, bokstav);
     console.log(`Index av rätt gissad bokstav ${bokstav.toUpperCase()} i detta varv är är ${korrektaIndex}, det är alltså DETTA/DESSA INDEX vi vill byta ut mot ${bokstav.toUpperCase()}.`);
 
-    //SPLICE PÅ FÖRSTA AV VARJE BOKSTAV
-    linjer.splice(korrektaIndex[0], 1, bokstav);
-    //OM FLER AV SAMMA BOKSTÄVER, SPLICE PÅ ANDRA
+    //SPLICE PÅ FÖRSTA AV VARJE BOKSTAV + TAR BORT DE FULA KOMMATECKNEN
+    linjer.splice(korrektaIndex[0], 1, bokstav).join(' ');
+    //OM FLER AV SAMMA BOKSTÄVER, SPLICE PÅ ANDRA + TAR BORT DE FULA KOMMATECKNEN
     if (korrektaIndex[1]) {
-        linjer.splice(korrektaIndex[1], 1, bokstav);
+        linjer.splice(korrektaIndex[1], 1, bokstav).join(' ');
     }
     //TAR BORT DE FULA KOMMATECKNEN MELLAN BOKSTÄVERNA
     rättGissadeBokstäverSynas.innerHTML = linjer.join(' ');
@@ -81,23 +78,48 @@ function displayRättBokstäver(bokstav) {
         console.log('_fortsätt_');
     } else {
         console.log('färdig');
-        
+        poängräknareCount++;
+        antalspelOmgångar++;    
+        poängräknare.innerHTML=`Poäng: ${poängräknareCount} / ${antalspelOmgångar}`
+    //VISAR RÄTT BOKSTÄVER I HTML:EN OCH TAR BORT KOMMATECKNEN MELLAN VARJE BOKSTAV
+    rättGissadeBokstäverSynas.innerHTML = linjer.join(' ');
     //ANAMERING- TAR BORT BOKSTÄVER EFTER ATT SPELAREN VUNNIT    
       animering();
+
+    //NOLLSTÄLL BOKSTAVS-ARRAYS OCH LINJE-ARRAY
+    ordetsBokstäver=[];
+    valdaBokstäver = [];
+    rättBokstäver = [];
+    felBokstäver = [];
+    linjer = [
+        '__',
+        '__',
+        '__',
+        '__',
+        '__'
+    ];
+    //EFTER 1 SEKUND NOLLSTÄLLS BOKSTÄVER TILL LINJER IGEN
+    setTimeout(() => {
+    rättGissadeBokstäverSynas.innerHTML = linjer.join(' ');
+    }, 1000);
+    //TAR BORT KLICKAD-CLASS SÅ ATT DET GÅR ATT KLICKA PÅ BOKSTÄVERNA I NÄSTA SPELOMGÅNG
+    alfabete.forEach((bokstav) => {
+        bokstav.classList.remove('klickad');
+    })
     }
 }
 
- animering= ()=> {
+
+//SLUTANIMERING EFTER RÄTT GISSAT ORD
+ animering = ()=> {
      anime({
         targets: '.alfabetet>button',
         scale: [
           {value: .0, easing: 'easeOutSine', duration: 400},
+          {value: 1, easing: 'easeInOutQuad', duration: 1200}
         ],
         delay: anime.stagger(200, {grid: [6, 5], from: 'center'})
-      });    
-      setTimeout(() => {
-        alfabetetSection.innerHTML='<h1>Du vann!</h1>'
-      }, 2000);
+      });  
 }
 
 
@@ -125,13 +147,8 @@ let startaNyOmgång = () => {
     console.log(nyttOrd);
     nyttOrd.forEach((bokstav) => {
         ordetsBokstäver.push(bokstav);
-        sorteradeBokstäver.push(bokstav)
     })
 }
-
-let sorteradeBokstäver= [];
-
-
 
 //FUNKTIONEN SOM GÖR OM DEN KNAPP/BOKSTAV SOM KLICKATS PÅ TILL LITEN BOKSTAV, SEDAN LOOPAR IGENOM ORDETS-BOKSTÄVER-LISTAN
 // VARJE BOKSTAV I LISTAN JÄMFÖRS MED DEN VALDA BOKSTAVEN, OM DE MATCHAR LÄGGS BOKSTAVEN TILL I RÄTTBOKSTÄVER-LISTAN
@@ -164,7 +181,7 @@ let valdBokstav = (event) => {
     }
     
     displayFelBokstäver();
-    event.target.removeEventListener('click', valdBokstav)
+   // event.target.removeEventListener('click', valdBokstav)
 }
 
 
@@ -177,24 +194,3 @@ alfabete.forEach((bokstav) => {
     bokstav.addEventListener('click', valdBokstav);
 })
 
-
-
-
-
-
-
-  //  kollaDubbletter();
-/*  //KOLLAR IGENOM BOKSTÄVERNA I ORDET OCH RÄKNAR IFALL DET FINNS FLER ÄN 1, OM FLER ÄN 1: BOKSTAVSRÄKAREN == 1
-let kollaDubbletter=()=> {
-    sorteradeBokstäver.sort();
-    console.log(sorteradeBokstäver)
-  //  console.log(nyaSorteradeBokstäver.sort((a,b)=>a-b))
-    let bokstavsRäknare= 0;
-   sorteradeBokstäver.forEach((bokstav, index) => {
-    if(bokstav==sorteradeBokstäver[index+1]) {
-        bokstavsRäknare++;    
-    }
-    console.log(bokstavsRäknare)
-   })
-   return bokstavsRäknare;
-}  */
