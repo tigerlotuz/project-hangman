@@ -25,7 +25,6 @@ main > button {
     flex-wrap: wrap;
     justify-content: center;
     align-items: center;
-  /*   width: 450px; */
 }
 
 .alfabetet > button {
@@ -79,24 +78,12 @@ footer {
     background-color: black;
 }
 
-
-
-
-
-
 .klickad {
     opacity: 0.5;
 }
 
 .synlig {
-    opacity: 0;
+    fill: #423280;
+    stroke: #423280;
+    transition: all .3s ease-in;
 }
-
-
-/* 
-.animering-transform {
-    background-color: teal;
-    border: 1px solid teal;
-    color: rgba(255, 255, 255, 0);
-    transition: all 1s linear 1s;
-} */
