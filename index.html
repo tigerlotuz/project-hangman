@@ -13,26 +13,30 @@
 
     <header class="hero">
         <section class="hero_buttons">
+
+            <section class="nedräknings-knappar">
+                <button id="fem-min">5 min</button>
+                <button id="tre-min">3 min</button>
+            </section>
+
             <button class="button2" id="start">Start</button>
             <button class="button1" id="reset">Reset</button>
+            <button class="button3" id="visa-countdown">Countdown</button>
+
             <aside class="dold_text">
                 <h2 class="dold_text1" style="display: none">Välj bokstäver ur alfabetet.
                 </h2>
             </aside>
         </section>
     </header>
-
-    <aside class="nedräkning">
-        <section class="nedräkningsKnappar">
-            <button id="fem-min">5 min</button>
-            <button id="tre-min">3 min</button>
-        </section>
-        <section class="nedräkningsSiffror">
-            <article class="minutes-display"></article>
-            <article class="seconds-display"></article>
-        </section>
-    </aside>
-
+    <section class="nedräknings-container">
+        <aside class="nedräkning">
+            <section class="nedräkningsSiffror">
+                <article class="minutes-display"></article>
+                <article class="seconds-display"></article>
+            </section>
+        </aside>
+    </section>
     <main>
         <section class="alfabetet">
             <button id="a">A</button>

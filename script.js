@@ -59,7 +59,9 @@ const svgHelaBilden = document.querySelectorAll('.svg-hela>.barn');
 const svgBakgrund = document.querySelector('.svg-hela');
 
 //COUNTDOWN TIMER
+const visaCountdownKnapp = document.querySelector('#visa-countdown');
 const nedräkning = document.querySelector('.nedräkning');
+const nedräkningsKnappar = document.querySelector('.nedräknings-knappar')
 const femMinKnapp = document.querySelector('#fem-min');
 const treMinKnapp = document.querySelector('#tre-min');
 const minutesDisplay = document.querySelector('.minutes-display');
@@ -138,7 +140,6 @@ displayRättBokstäver = (bokstav) => {
         animering();  
         //NOLLSTÄLLER SPELPLANEN FÖR NÄSTA OMGÅNG
         nollställOmgång();
-      
     }
 }
 
@@ -235,9 +236,19 @@ for (bokstav of alfabete) {
 }
 
 //COUNTDOWN TIMER
-
-femMinKnapp.addEventListener('click', () => countDown(5));
-treMinKnapp.addEventListener('click', () => countDown(3));
+visaCountdownKnapp.addEventListener('mouseover', () => {
+    nedräkningsKnappar.classList.toggle('synlig');
+    femMinKnapp.classList.toggle('synlig')
+    treMinKnapp.classList.toggle('synlig')
+})
+femMinKnapp.addEventListener('click', () => {
+    nedräkning.classList.toggle('synlig');
+    countDown(5);
+});
+treMinKnapp.addEventListener('click', () => {
+    nedräkning.classList.toggle('synlig');
+    countDown(3);
+});
 
 function countDown(minuter){ 
     //MINUTER OMVANDLADE TILL SEKUNDER
@@ -295,9 +306,9 @@ if (currentTime<1) {
 //ÄNDRAR FÄRG PÅ SIFFRORNA 
 färgNedräkning = (currentTime, minuter) => {
     if (currentTime > (minuter*60) * 0.75) {
-        nedräkning.style.color = 'green';
+        nedräkning.style.color = '#3D943F';
     } else if (currentTime > (minuter*60) * 0.5) {
-        nedräkning.style.color = 'yellow';
+        nedräkning.style.color = '#acac02';
     } else if (currentTime > (minuter*60) * 0.25) {
         nedräkning.style.color = 'orange';
     } else {
