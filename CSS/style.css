@@ -90,11 +90,11 @@ main {
     background-color: var(--main_color);
     display: grid;
     grid-template-areas: 
-    ".alfabetet .hangman";
+    "alfabetet hangman";
     
 }
 .alfabetet {
-    grid-area: .alfabetet;
+    grid-area: alfabetet;
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
@@ -102,7 +102,7 @@ main {
     width: 100%;
 }
 .hangman {
-    grid-area: .hangman;
+    grid-area: hangman;
     width: 100%;
 }
 .ordbox {
