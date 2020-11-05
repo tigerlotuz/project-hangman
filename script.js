@@ -31,9 +31,9 @@ $(document).ready(function(){
 
 const main = document.querySelector('main');
 const body = document.querySelector('body');
-const startaNyOmgångKnapp = document.querySelector('#starta-ny-omgång-knapp');
-let resetKnapp = document.querySelector('#reset');
-const startKnapp = document.querySelector('#start');
+const startaNyOmgångKnapp = document.querySelector('#starta-ny-omgång-knapp');  //
+let resetKnapp = document.querySelector('#reset'); //nytt-ord-knapp
+const startKnapp = document.querySelector('#start');//starta-ny-omgång-knapp
 const alfabete = document.querySelectorAll('.alfabetet>button');
 const alfabetetSection = document.querySelector('.alfabetet');
 let ordetsBokstäver= [];
