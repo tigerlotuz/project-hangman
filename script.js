@@ -41,6 +41,7 @@ const rättGissadeBokstäverSynas = document.querySelector('.ordbox');
 const rättGissadBokstäverBoxLista = document.querySelectorAll('.ordbox>article');
 const felGissadeBokstäverSynas = document.querySelector('.anvanda-bokstaver');
 const poängräknare = document.querySelector('#poangraknare');
+const hangmanBackground = document.querySelector('.hangman');
 
 //SVG-BILD-DELAR
 const ground = document.getElementById('ground');
@@ -50,74 +51,69 @@ const arms = document.getElementById('arms');
 const legs = document.getElementById('legs');
 const scaffold = document.getElementById('scaffold');
 const svgHelaBilden = document.querySelectorAll('.svg-hela>.barn');
+const svgBakgrund = document.querySelector('.svg-hela');
 
-
-function getAllIndexes(ordetsBokstäver, bokstav) {
-    let indexes = [], i;
-    for (i=0; i <ordetsBokstäver.length; i++) 
-        if (ordetsBokstäver[i]==bokstav)
-            indexes.push(i);
-            console.log(indexes)
-            return indexes
-}
+//COUNTDOWN TIMER
+const nedräkning = document.querySelector('.nedräkning');
+const femMinKnapp = document.querySelector('#fem-min');
+const treMinKnapp = document.querySelector('#tre-min');
+const minutesDisplay = document.querySelector('.minutes-display');
+const secondsDisplay = document.querySelector('.seconds-display');
 
 //POÄNG-RÄKNARE OCH OMGÅNGS-RÄKNARE BÖRJAR FRÅN 0
 poängräknareCount=0;
 antalspelOmgångar=0;
 
 
+//RÄKNAR ANTAL FEL-GISSNINGAR
+let antalFel=0;
+
+ getAllIndexes = (ordetsBokstäver, bokstav) => {
+    let indexes = [], i;
+    for (i=0; i < ordetsBokstäver.length; i++) 
+        if (ordetsBokstäver[i]==bokstav)
+            indexes.push(i);
+            return indexes;
+}
         
  //TAR BORT HÄNGA-GUBBE-SVG:N
- let taBortSvg = () => {
-    setTimeout(() => {
-       svgHelaBilden.forEach((del) => {
-           if (del.classList.contains('synlig')){
+taBortSvg = () => {
+    setTimeout (() => {
+        for (del of svgHelaBilden) {
+           if (del.classList.contains('synlig')) {
                del.classList.remove('synlig')
            }  
-       }); 
+       }; 
     }, 2000);
-    }
+}
        
-
-
 //NOLLSTÄLLNINGSFUNKTION, NOLLSTÄLLER SPELPLAN EFTER VUNNEN/FÖRLORAD OMGÅNG
-
-let nollställOmgång = () => {
+nollställOmgång = () => {
     //NOLLSTÄLL BOKSTAVS-ARRAYS OCH LINJE-ARRAY
     ordetsBokstäver=[];
     valdaBokstäver = [];
     rättBokstäver = [];
     felBokstäver = [];
-    linjer = [
-        '__',
-        '__',
-        '__',
-        '__',
-        '__'
-    ];
+  
+    linjer= [];
+    linjer.push('__','__','__','__','__')
+
     //EFTER 1 SEKUND NOLLSTÄLLS BOKSTÄVER TILL LINJER IGEN
-    setTimeout(() => {
-    rättGissadeBokstäverSynas.innerHTML = linjer.join(' ');
-    }, 1000);
+    setTimeout (() => rättGissadeBokstäverSynas.innerHTML = linjer.join(' '), 1000);
     //TAR BORT KLICKAD-CLASS SÅ ATT DET GÅR ATT KLICKA PÅ BOKSTÄVERNA I NÄSTA SPELOMGÅNG
-    alfabete.forEach((bokstav) => {
+    for (bokstav of alfabete) {
         bokstav.classList.remove('klickad');
-    })
+    }
     //TAR BORT GAME-OVER-CLASS PÅ SVG:N (BAKGRUNDSFÄRG OCH GAME-OVER-TEXT)
-    setTimeout(() => {
-        felGissadeBokstäverSynas.classList.remove('game-over');
-    }, 2500);
+    setTimeout (() => felGissadeBokstäverSynas.classList.remove('game-over'), 4000);
     //TAR BORT SJÄLVA SVG-BILDEN
     taBortSvg();
+
 };
 
-
-
-function displayRättBokstäver(bokstav) {
-    rättGissadeBokstäverSynas.innerHTML = linjer;
-    console.log(`Rätt bokstäver är: ${ordetsBokstäver}, rätt gissade bokstäver är: ${rättBokstäver}`);
-    let korrektaIndex = getAllIndexes(ordetsBokstäver, bokstav);
-    console.log(`Index av rätt gissad bokstav ${bokstav.toUpperCase()} i detta varv är är ${korrektaIndex}, det är alltså DETTA/DESSA INDEX vi vill byta ut mot ${bokstav.toUpperCase()}.`);
+displayRättBokstäver = (bokstav) => {
+    rättGissadeBokstäverSynas.innerHTML = linjer;               // console.log(`Rätt bokstäver är: ${ordetsBokstäver}, rätt gissade bokstäver är: ${rättBokstäver}`);
+    let korrektaIndex = getAllIndexes(ordetsBokstäver, bokstav);        // console.log(`Index av rätt gissad bokstav ${bokstav.toUpperCase()} i detta varv är är ${korrektaIndex}, det är alltså DETTA/DESSA INDEX vi vill byta ut mot ${bokstav.toUpperCase()}.`);
 
     //SPLICE PÅ FÖRSTA AV VARJE BOKSTAV + TAR BORT DE FULA KOMMATECKNEN
     linjer.splice(korrektaIndex[0], 1, bokstav).join(' ');
@@ -126,29 +122,23 @@ function displayRättBokstäver(bokstav) {
         linjer.splice(korrektaIndex[1], 1, bokstav).join(' ');
     }
     //TAR BORT DE FULA KOMMATECKNEN MELLAN BOKSTÄVERNA
-    rättGissadeBokstäverSynas.innerHTML = linjer.join(' ');
-    console.log(linjer);
-
+    rättGissadeBokstäverSynas.innerHTML = linjer.join(' ');             
     //KOLLA OM DET SAKNAS BOKSTÄVER ELLER OM ALLA BOKSTÄVER ÄR PÅ PLATS => VUNNIT
-    if (linjer.includes('__')) {
-        console.log('_fortsätt_');
-    } else {
-        console.log('färdig');
+    if (linjer.includes('__')) {                       
+    } else {                                            
         poängräknareCount++;
         antalspelOmgångar++;    
         poängräknare.innerHTML=`Poäng: ${poängräknareCount} / ${antalspelOmgångar}`
         //ANAMERING- TAR BORT BOKSTÄVER EFTER ATT SPELAREN VUNNIT    
-        animering()  
+        animering();  
         //NOLLSTÄLLER SPELPLANEN FÖR NÄSTA OMGÅNG
-        nollställOmgång()
-        //VISAR RÄTT BOKSTÄVER I HTML:EN OCH TAR BORT KOMMATECKNEN MELLAN VARJE BOKSTAV
-        rättGissadeBokstäverSynas.innerHTML = linjer.join(' ');
+        nollställOmgång();
+      
     }
 }
 
-
 //SLUTANIMERING EFTER RÄTT GISSAT ORD
- animering = ()=> {
+animering = () => {
      anime({
         targets: '.alfabetet>button',
         scale: [
@@ -160,54 +150,50 @@ function displayRättBokstäver(bokstav) {
 }
 
 
-let displayFelBokstäver = () => {
-    //RÄKNAR ANTAL FEL
-    let antalFel=0;
+displayFelBokstäver = () => {
     //FÖR VARJE FEL BOKSTAV BLIR EN DEL AV SVG:N SYNLIG
-    felBokstäver.forEach((bokstav) => {
+    for (bokstav of felBokstäver) {
         svgHelaBilden.forEach((del, index) => {
-            if (index == felBokstäver.indexOf(bokstav)){
-                console.log('yes', index)
-                del.classList.add('synlig')
-                console.log(del.classList)
-            } else {
-                console.log('no', index);
-            }
-        })
-    //FÖR VARJE FEL BOKSTAV RÄKNAS ANTALET FEL UPP
-        svgHelaBilden.forEach((part, index)=>{
-                if (part.classList.contains('synlig'))
-                    antalFel=index;
-                    console.log(antalFel)
-        })
-        console.log(`Antal fel: ${antalFel}`)
-
+            if (index == felBokstäver.indexOf(bokstav)){          
+                del.classList.add('synlig')   
+                hangmanBackground.style.backgroundColor='rgba(147, 75, 107, 0.'+antalFel*2+')';
+                hangmanBackground.style.borderRadius=''+antalFel*2.5+'0%';
+                hangmanBackground.style.padding=''+antalFel+'rem, 0,'+antalFel+'rem';
+                antalFel=index;                   
+            } 
+        })                                                      
     //OM ANTAL FEL ÄR 5 SÅ ÄR HELA SVG:N SYNLIG OCH GUBBEN ÄR HÄNGD => GAME OVER 
         if(antalFel==5) {
             //UPPDATERAR RÄKNAREN FÖR ANTAL SPELOMGÅNGAR
             antalspelOmgångar++;    
             poängräknare.innerHTML=`Poäng: ${poängräknareCount} / ${antalspelOmgångar}`
             //ÄNDRAR BAKGRUNDSFÄRG OCH LÄGGER TILL TEXTEN "GAME OVER!" NÄR GUBBEN ÄR HÄNGD
+           setTimeout(() => {
             felGissadeBokstäverSynas.classList.add('game-over')
+           }, 1000);
+
             //NOLLSTÄLLER SPELPLANEN FÖR NÄSTA OMGÅNG
             nollställOmgång();
             animering();
-            
         }
-    })   
+    }
+    
 }
 
-//FUNKTIONEN SOM STARTAR NY SPELOMGÅNG GENOM ATT SLUMPA FRAM ETT ORD I ORD-LISTAN OCH SEDAN DELA UPP ORDET I BOKSTÄVER
-//SEDAN PUSHAS VARJE BOKSTAV TILL ORDETSBOKSTÄVER-LISTAN 
+//STARTAR NY SPELOMGÅNG 
 let startaNyOmgång = () => {
+    //TA BORT COUNTDOWN-SIFFROR
+    secondsDisplay.innerHTML='';
+    minutesDisplay.innerHTML='';
+    //NOLLSTÄLLER ANTALFEL EFTER EV FÖREGÅENDE SPELOMGÅNG 
+    antalFel=0;
+    //SLUMPAR FRAM ETT ORD I ORD-LISTAN
     slumpaOrd = Math.floor(Math.random()*10);
-    let nyttOrd=ord[slumpaOrd];
-    console.log(nyttOrd);
-    nyttOrd=nyttOrd.toLowerCase().split('');
-    console.log(nyttOrd);
-    nyttOrd.forEach((bokstav) => {
-        ordetsBokstäver.push(bokstav);
-    })
+    let nyttOrd=ord[slumpaOrd];                             console.log(nyttOrd);
+    //DELAR UPP ORDET I BOKSTÄVER                                 
+    nyttOrd=nyttOrd.toLowerCase().split('');  
+    //PUSHAR VARJE BOKSTAV TILL ORDETSBOKSTÄVER-LISTAN       
+    ordetsBokstäver=nyttOrd.map(bokstav=>bokstav);    
 }
 
 //FUNKTIONEN SOM GÖR OM DEN KNAPP/BOKSTAV SOM KLICKATS PÅ TILL LITEN BOKSTAV, SEDAN LOOPAR IGENOM ORDETS-BOKSTÄVER-LISTAN
@@ -215,25 +201,17 @@ let startaNyOmgång = () => {
 //OM DE INTE MATCHAR LÄGGS BOKSTAVEN I FELBOKSTÄVER-LISTAN
 let valdBokstav = (event) => {
     let bokstav = event.target.innerText.toLowerCase();
-    event.target.classList.add('klickad');
-    console.log(event.target.classList)
-    let bokstavsmätare=0;
-    console.log('Vald bokstav är: ', bokstav);
-     ordetsBokstäver.forEach((ordetsBokstav) => {
-        if(ordetsBokstav==bokstav) {
-            console.log('ja')
-            rättBokstäver.push(bokstav)
-            console.log(rättBokstäver)
-        } 
-    });
+    event.target.classList.add('klickad');            
+    let bokstavsmätare=0;                               
+    rättBokstäver=ordetsBokstäver.filter((ordetsBokstav)=>ordetsBokstav==bokstav)  
+    
 //KOLLAR OM DEN VALDA BOKSTAVEN FINNS I RÄTTBOKSTÄVER-LISTAN, OM DEN FINNS BLIR BOKSTAVSMÄTAREN 1, ANNARS ÄR DEN 0
-    rättBokstäver.forEach((rättBokstav)=>{
+    for (rättBokstav of rättBokstäver) {
         if(rättBokstav==bokstav){
-            bokstavsmätare++;
-            console.log(bokstavsmätare, rättBokstav)
+            bokstavsmätare++;                            
             displayRättBokstäver(rättBokstav);
         }
-    });
+    }
 
 //OM BOKSTAVSMÄTAREN ÄR 0 PUSHAS VALDA BOKSTAVEN TILL FELBOKSTÄVER-LISTAN
     if(bokstavsmätare==0) {
@@ -242,13 +220,82 @@ let valdBokstav = (event) => {
     displayFelBokstäver();
 }
 
-
 //STARTAR NY SPELOMGÅNG GENOM ATT SLUMPA FRAM ETT ORD UR ORD-LISTAN
 startaNyOmgångKnapp.addEventListener('click', startaNyOmgång);
 
 //LÄGGER TILL EVENTLISTENER PÅ VARJE KNAPP (VARJE BOKSTAV I ALFABETET)
 //VID KLICK STARTAR FUNKTIONEN "VALDBOKSTAV"
-alfabete.forEach((bokstav) => {
+for (bokstav of alfabete) {
     bokstav.addEventListener('click', valdBokstav);
-})
+}
 
+//COUNTDOWN TIMER
+
+femMinKnapp.addEventListener('click', () => countDown(5));
+treMinKnapp.addEventListener('click', () => countDown(3));
+
+function countDown(minuter){ 
+    //MINUTER OMVANDLADE TILL SEKUNDER
+    let totalStartTid=minuter*60;
+    
+    //FORMATERING AV HUR TIDEN VISAS INNAN NEDRÄKNINGEN BÖRJAR
+    minutesDisplay.innerHTML = '0' + Math.floor(totalStartTid/60);
+    secondsDisplay.innerHTML= '0' + Math.floor(totalStartTid)%60;
+    
+    //STÄLLER IN NEDRÄKNINGEN: RÄKNAR NER FRÅN TOTALSTARTTID, 1 SEKUND I TAGET
+    let interval= setInterval(() => {    
+        countDown.runnning=true;
+        //CURRENT TIME-NEDRÄKNING
+        let currentTime=totalStartTid--;
+
+        //OM GUBBEN ÄR HÄNGD-STOPPAR NEDRÄKNING
+        if (antalFel==5){
+            clearInterval(interval);
+        } 
+
+        //ÄNDRAR FÄRGEN PÅ SIFFRORNA BEROENDE PÅ HUR LÅNG TID SOM ÄR KVAR
+        färgNedräkning(currentTime, minuter);
+        //Hur många hela minuter kvar:                   
+        minutesDisplay.innerHTML = '0' + Math.floor(totalStartTid/60)%60;
+        //Hur många sekunder kvar utöver hela minuter:
+        secondsDisplay.innerHTML=Math.floor(totalStartTid)%60;
+        if(secondsDisplay.innerHTML<10){
+            secondsDisplay.innerHTML="0"+secondsDisplay.innerHTML
+        }
+            //NÄR TIDEN ÄR UTE
+            tidenUte(currentTime, interval);
+    },1000) 
+    
+    
+} 
+
+//NÄR TIDEN ÄR UTE
+tidenUte = (currentTime, interval) => {
+if (currentTime<1) {
+    clearInterval(interval);
+    nedräkning.innerHTML='<h2>Time\'s up!</h2>';
+
+     //UPPDATERAR RÄKNAREN FÖR ANTAL SPELOMGÅNGAR
+     antalspelOmgångar++;    
+     poängräknare.innerHTML=`Poäng: ${poängräknareCount} / ${antalspelOmgångar}`
+     //ÄNDRAR BAKGRUNDSFÄRG OCH LÄGGER TILL TEXTEN "GAME OVER!" NÄR GUBBEN ÄR HÄNGD
+     felGissadeBokstäverSynas.classList.add('game-over')
+     //ANAMERING- TAR BORT BOKSTÄVER EFTER ATT SPELAREN VUNNIT    
+     animering();  
+     //NOLLSTÄLLER SPELPLANEN FÖR NÄSTA OMGÅNG
+     nollställOmgång();
+    }
+}
+
+//ÄNDRAR FÄRG PÅ SIFFRORNA 
+färgNedräkning = (currentTime, minuter) => {
+    if (currentTime > (minuter*60) * 0.75) {
+        nedräkning.style.color = 'green';
+    } else if (currentTime > (minuter*60) * 0.5) {
+        nedräkning.style.color = 'yellow';
+    } else if (currentTime > (minuter*60) * 0.25) {
+        nedräkning.style.color = 'orange';
+    } else {
+        nedräkning.style.color = 'rgb(141, 9, 9)';
+    }    
+}
