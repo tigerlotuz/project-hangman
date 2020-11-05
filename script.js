@@ -100,7 +100,7 @@ nollställOmgång = () => {
         bokstav.classList.remove('klickad');
     }
     //TAR BORT GAME-OVER-CLASS PÅ SVG:N (BAKGRUNDSFÄRG OCH GAME-OVER-TEXT)
-    setTimeout (() => felGissadeBokstäverSynas.classList.remove('game-over'), 2500);
+    setTimeout (() => felGissadeBokstäverSynas.classList.remove('game-over'), 4000);
     //TAR BORT SJÄLVA SVG-BILDEN
     taBortSvg();
 };
@@ -159,7 +159,9 @@ displayFelBokstäver = () => {
             antalspelOmgångar++;    
             poängräknare.innerHTML=`Poäng: ${poängräknareCount} / ${antalspelOmgångar}`
             //ÄNDRAR BAKGRUNDSFÄRG OCH LÄGGER TILL TEXTEN "GAME OVER!" NÄR GUBBEN ÄR HÄNGD
+           setTimeout(() => {
             felGissadeBokstäverSynas.classList.add('game-over')
+           }, 1000);
             //NOLLSTÄLLER SPELPLANEN FÖR NÄSTA OMGÅNG
             nollställOmgång();
         }
@@ -261,8 +263,18 @@ function countDown(minuter){
 tidenUte = (currentTime, interval) => {
 if (currentTime<1) {
     clearInterval(interval);
-    nedräkning.innerHTML='<h1>Time\'s up!</h1>';
+    nedräkning.innerHTML+='<h1>Time\'s up!</h1>';
     nedräkning.style.backgroundColor = '#ffffff00';
+
+     //UPPDATERAR RÄKNAREN FÖR ANTAL SPELOMGÅNGAR
+     antalspelOmgångar++;    
+     poängräknare.innerHTML=`Poäng: ${poängräknareCount} / ${antalspelOmgångar}`
+     //ÄNDRAR BAKGRUNDSFÄRG OCH LÄGGER TILL TEXTEN "GAME OVER!" NÄR GUBBEN ÄR HÄNGD
+     felGissadeBokstäverSynas.classList.add('game-over')
+     //ANAMERING- TAR BORT BOKSTÄVER EFTER ATT SPELAREN VUNNIT    
+     animering();  
+     //NOLLSTÄLLER SPELPLANEN FÖR NÄSTA OMGÅNG
+     nollställOmgång();
     }
 }
 
