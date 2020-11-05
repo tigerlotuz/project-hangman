@@ -1,19 +1,18 @@
 
 
 // Orden som datorn kan välja 
-let ord = [
-    'bacon',
-    'chans',
-    'dator',
-    'fasad',
-    'glass',
-    'hemsk',
-    'jycke',
-    'kavel',
-    'lilja',
-    'melon'
+let ord = ['bacon', 'chans', 'dator', 'fasad', 'glass', 'hemsk', 'jycke', 
+    'kavel', 'lilja', 'melon', 'alarm', 'alibi', 'altan', 'fabel', 'fikon', 
+    'godis', 'grill', 'hagel', 'hobby', 'mamma', 'miljö', 'mixer', 'banan', 
+    'bagge', 'bambu', 'chips', 'cider', 'clown', 'demon', 'drake', 'enkel', 
+    'episk', 'enzym', 'nylon', 'näpen', 'nalle', 'idyll', 'ironi', 'index', 
+    'juvel', 'jänta', 'kaffe', 'kakao', 'kanel', 'labil', 'lasso', 'tablå', 
+    'tiger', 'uggla', 'utdöd', 'utopi', 'odjur', 'odåga', 'ogräs', 'pappa', 
+    'pirat', 'pudel', 'robot', 'rispa', 'rouge', 'safir', 'sjyst', 'skata', 
+    'trött', 'vinyl', 'vante', 'vajer', 'yppig', 'yngel', 'ytlig', 'åbäke', 
+    'ånger', 'åskar', 'äpple', 'ärlig', 'ärtig', 'ökänd', 'öppen', 'öland',
 ];
-
+// linjer där bokstäverna hamnar
 let linjer = [
     '__',
     '__',
@@ -21,18 +20,20 @@ let linjer = [
     '__',
     '__'
 ]
-/* Jquery function till knappen starta */
+/* Jquery function till startknappen */
 $(document).ready(function(){
 /* när knappen klickas på så startar funktionen */
-    $(".button1").click(function(){
+    $(".button2").click(function(){
         /* visar eller döljer ".dold_text1" */
-         $(".dold_text1").toggle("fast");
+         $(".dold_text1").toggle();
     });
 });
 
 const main = document.querySelector('main');
 const body = document.querySelector('body');
 const startaNyOmgångKnapp = document.querySelector('#starta-ny-omgång-knapp');
+let resetKnapp = document.querySelector('#reset');
+const startKnapp = document.querySelector('#start');
 const alfabete = document.querySelectorAll('.alfabetet>button');
 const alfabetetSection = document.querySelector('.alfabetet');
 let ordetsBokstäver= [];
@@ -44,6 +45,11 @@ const rättGissadBokstäverBoxLista = document.querySelectorAll('.ordbox>article
 const felGissadeBokstäverSynas = document.querySelector('.anvanda-bokstaver');
 const poängräknare = document.querySelector('#poangraknare');
 const hangmanBackground = document.querySelector('.hangman');
+
+
+
+
+
 
 //SVG-BILD-DELAR
 const ground = document.getElementById('ground');
@@ -242,7 +248,7 @@ let valdBokstav = (event) => {
 }
 
 //STARTAR NY SPELOMGÅNG GENOM ATT SLUMPA FRAM ETT ORD UR ORD-LISTAN
-startaNyOmgångKnapp.addEventListener('click', startaNyOmgång);
+startKnapp.addEventListener('click', startaNyOmgång);
 
 //LÄGGER TILL EVENTLISTENER PÅ VARJE KNAPP (VARJE BOKSTAV I ALFABETET)
 //VID KLICK STARTAR FUNKTIONEN "VALDBOKSTAV"
@@ -340,3 +346,8 @@ färgNedräkning = (currentTime, minuter) => {
         nedräkning.style.color = 'rgb(141, 9, 9)';
     }    
 }
+// Reset på sidan
+let reset = () => {
+    location.reload();
+}
+resetKnapp.addEventListener('click', reset);
