@@ -53,9 +53,20 @@ const scaffold = document.getElementById('scaffold');
 const svgHelaBilden = document.querySelectorAll('.svg-hela>.barn');
 const svgBakgrund = document.querySelector('.svg-hela');
 
+//COUNTDOWN TIMER
+const nedräkning = document.querySelector('.nedräkning');
+const femMinKnapp = document.querySelector('#fem-min');
+const treMinKnapp = document.querySelector('#tre-min');
+const minutesDisplay = document.querySelector('.minutes-display');
+const secondsDisplay = document.querySelector('.seconds-display');
+
 //POÄNG-RÄKNARE OCH OMGÅNGS-RÄKNARE BÖRJAR FRÅN 0
 poängräknareCount=0;
 antalspelOmgångar=0;
+
+
+//RÄKNAR ANTAL FEL-GISSNINGAR
+let antalFel=0;
 
  getAllIndexes = (ordetsBokstäver, bokstav) => {
     let indexes = [], i;
@@ -86,14 +97,6 @@ nollställOmgång = () => {
   
     linjer= [];
     linjer.push('__','__','__','__','__')
-    
-    //  linjer=linjer.map(index => index.textContent='__')
-    /* ////
-    ////
-    linjer[0]='__';
-    console.log(linjer[0])
-    ////
-    //// */
 
     //EFTER 1 SEKUND NOLLSTÄLLS BOKSTÄVER TILL LINJER IGEN
     setTimeout (() => rättGissadeBokstäverSynas.innerHTML = linjer.join(' '), 1000);
@@ -105,6 +108,7 @@ nollställOmgång = () => {
     setTimeout (() => felGissadeBokstäverSynas.classList.remove('game-over'), 4000);
     //TAR BORT SJÄLVA SVG-BILDEN
     taBortSvg();
+
 };
 
 displayRättBokstäver = (bokstav) => {
@@ -129,6 +133,7 @@ displayRättBokstäver = (bokstav) => {
         animering();  
         //NOLLSTÄLLER SPELPLANEN FÖR NÄSTA OMGÅNG
         nollställOmgång();
+      
     }
 }
 
@@ -144,9 +149,8 @@ animering = () => {
       });  
 }
 
+
 displayFelBokstäver = () => {
-    //RÄKNAR ANTAL FEL
-    let antalFel=0;
     //FÖR VARJE FEL BOKSTAV BLIR EN DEL AV SVG:N SYNLIG
     for (bokstav of felBokstäver) {
         svgHelaBilden.forEach((del, index) => {
@@ -167,20 +171,28 @@ displayFelBokstäver = () => {
            setTimeout(() => {
             felGissadeBokstäverSynas.classList.add('game-over')
            }, 1000);
+
             //NOLLSTÄLLER SPELPLANEN FÖR NÄSTA OMGÅNG
             nollställOmgång();
             animering();
-            
         }
-    }   
+    }
+    
 }
 
-//FUNKTIONEN SOM STARTAR NY SPELOMGÅNG GENOM ATT SLUMPA FRAM ETT ORD I ORD-LISTAN OCH SEDAN DELA UPP ORDET I BOKSTÄVER
-//SEDAN PUSHAS VARJE BOKSTAV TILL ORDETSBOKSTÄVER-LISTAN 
+//STARTAR NY SPELOMGÅNG 
 let startaNyOmgång = () => {
+    //TA BORT COUNTDOWN-SIFFROR
+    secondsDisplay.innerHTML='';
+    minutesDisplay.innerHTML='';
+    //NOLLSTÄLLER ANTALFEL EFTER EV FÖREGÅENDE SPELOMGÅNG 
+    antalFel=0;
+    //SLUMPAR FRAM ETT ORD I ORD-LISTAN
     slumpaOrd = Math.floor(Math.random()*10);
-    let nyttOrd=ord[slumpaOrd];                                     console.log(nyttOrd);
-    nyttOrd=nyttOrd.toLowerCase().split('');        
+    let nyttOrd=ord[slumpaOrd];                             console.log(nyttOrd);
+    //DELAR UPP ORDET I BOKSTÄVER                                 
+    nyttOrd=nyttOrd.toLowerCase().split('');  
+    //PUSHAR VARJE BOKSTAV TILL ORDETSBOKSTÄVER-LISTAN       
     ordetsBokstäver=nyttOrd.map(bokstav=>bokstav);    
 }
 
@@ -217,31 +229,14 @@ for (bokstav of alfabete) {
     bokstav.addEventListener('click', valdBokstav);
 }
 
-
-
-
-
-
-
-
-
 //COUNTDOWN TIMER
-const nedräkning = document.querySelector('.nedräkning');
-const femMinKnapp = document.querySelector('#fem-min');
-const treMinKnapp = document.querySelector('#tre-min');
-const minutesDisplay = document.querySelector('.minutes-display');
-const secondsDisplay = document.querySelector('.seconds-display');
 
-femMinKnapp.addEventListener('click', (e) => {
-    countDown(5);
-});
-treMinKnapp.addEventListener('click', (e) => {
-    countDown(3);
-});
+femMinKnapp.addEventListener('click', () => countDown(5));
+treMinKnapp.addEventListener('click', () => countDown(3));
 
 function countDown(minuter){ 
     //MINUTER OMVANDLADE TILL SEKUNDER
-    let totalStartTid=minuter*60
+    let totalStartTid=minuter*60;
     
     //FORMATERING AV HUR TIDEN VISAS INNAN NEDRÄKNINGEN BÖRJAR
     minutesDisplay.innerHTML = '0' + Math.floor(totalStartTid/60);
@@ -252,6 +247,12 @@ function countDown(minuter){
         countDown.runnning=true;
         //CURRENT TIME-NEDRÄKNING
         let currentTime=totalStartTid--;
+
+        //OM GUBBEN ÄR HÄNGD-STOPPAR NEDRÄKNING
+        if (antalFel==5){
+            clearInterval(interval);
+        } 
+
         //ÄNDRAR FÄRGEN PÅ SIFFRORNA BEROENDE PÅ HUR LÅNG TID SOM ÄR KVAR
         färgNedräkning(currentTime, minuter);
         //Hur många hela minuter kvar:                   
@@ -264,14 +265,15 @@ function countDown(minuter){
             //NÄR TIDEN ÄR UTE
             tidenUte(currentTime, interval);
     },1000) 
+    
+    
 } 
 
 //NÄR TIDEN ÄR UTE
 tidenUte = (currentTime, interval) => {
 if (currentTime<1) {
     clearInterval(interval);
-    nedräkning.innerHTML+='<h1>Time\'s up!</h1>';
-    nedräkning.style.backgroundColor = '#ffffff00';
+    nedräkning.innerHTML='<h2>Time\'s up!</h2>';
 
      //UPPDATERAR RÄKNAREN FÖR ANTAL SPELOMGÅNGAR
      antalspelOmgångar++;    
@@ -287,7 +289,6 @@ if (currentTime<1) {
 
 //ÄNDRAR FÄRG PÅ SIFFRORNA 
 färgNedräkning = (currentTime, minuter) => {
-    nedräkning.style.backgroundColor = 'grey';
     if (currentTime > (minuter*60) * 0.75) {
         nedräkning.style.color = 'green';
     } else if (currentTime > (minuter*60) * 0.5) {
@@ -295,6 +296,6 @@ färgNedräkning = (currentTime, minuter) => {
     } else if (currentTime > (minuter*60) * 0.25) {
         nedräkning.style.color = 'orange';
     } else {
-        nedräkning.style.color = 'red';
+        nedräkning.style.color = 'rgb(141, 9, 9)';
     }    
 }

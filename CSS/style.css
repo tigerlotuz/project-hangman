@@ -21,7 +21,29 @@ body {
 body {
     font-size: 20px;
     font-family: 'Shadows Into Light Two', cursive;
+     font-family: 'Cousine', monospace; 
 }
+
+button {
+    color: white;
+    transition: all .2s ease;
+}
+
+
+ button:hover {
+    filter: brightness(1.3);
+    box-shadow: 0px 2px 5px #261f3f;
+}
+
+.hero_buttons > button:active, .nedräkningsKnappar>button:active{
+    border: 2px inset #88878b;
+}
+
+ button:focus {
+    outline: none;
+} 
+
+
 .alfabetet > button, .hero_buttons > button {
     font-family: 'Cousine', monospace;
     font-size: 1.2rem;
@@ -36,16 +58,16 @@ body {
     color: white;
   }
 
-  .hero_buttons > button {
+  .hero_buttons > button, .nedräkningsKnappar>button {
     background-color: var(--button_color);
-    border: none;
+    border: 2px inset #88878b00;
     border-radius: .5rem;
     box-shadow: 1px 4px 5px #000;
     outline: 0;
     margin: 0 .5rem;
     padding: .5rem 1.5rem;
     text-align: center;
-    color: black;
+/*     color: black; */
     cursor: pointer;
   }
   
@@ -118,6 +140,7 @@ main {
     flex-direction: row;
     justify-content: space-evenly;
     align-items: center;
+    color: white;
 }
 
 .poang {
@@ -175,31 +198,49 @@ footer {
 .nedräkning {
     padding: 1rem;
     border-radius: 5px;
-    width: 30vw;
-    min-width: 300px;
-    max-width: 800px;
+    width: 500px;
     display: flex;
     flex-direction: row;
-    justify-content: space-evenly;
+    justify-content: space-between;
     margin: 2rem auto;
-    font-size: 3rem;
+    font-size: 5rem;
+    letter-spacing: .5rem;
     text-shadow: 0px 0px 3px rgb(243, 241, 241);
     transition: all .3s ease-in;
 }
 
-.nedräkning > button {
+.nedräkning > h1 {
+    font-size: 5rem;
+    color: var(--footer_color);
+}
+.nedräkningsSiffror {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+.nedräkningsSiffror > article {
+    margin: 1rem;
+}
+.nedräkningsKnappar {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+/* .nedräkning button {
     border-radius: 100%;
     background-color: rgb(48, 49, 49);
     color: white;
     border: none;
     height: 50px;
     width: 50px;
-}
+    margin: .5rem 1rem;
+} */
 
-.nedräkning > button:hover {
+.nedräkning button:hover {
     filter: brightness(1.3);
     box-shadow: 0px 2px 5px #261f3f;
 }
-.nedräkning > button:focus {
+.nedräkning button:focus {
     outline: none;
 } 
