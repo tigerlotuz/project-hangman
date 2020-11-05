@@ -191,6 +191,8 @@ let displayFelBokstäver = () => {
             felGissadeBokstäverSynas.classList.add('game-over')
             //NOLLSTÄLLER SPELPLANEN FÖR NÄSTA OMGÅNG
             nollställOmgång();
+            animering();
+            
         }
     })   
 }
