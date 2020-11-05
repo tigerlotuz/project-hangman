@@ -2,11 +2,13 @@
 :root {
     --main_color: #ECEAF3;
     --footer_color: #29171F;
-    --header_color: #6B5EA5;
+    --header_color: #6b5ea5;
     --alfabet_color: #703882;
     --button_color: #934B6B;
 }
-
+html {
+    background-color: white;
+}
 /* Body */
 body {
     max-width: 1000px;
@@ -14,6 +16,7 @@ body {
     margin: 0 auto;
     text-align: center;
     box-sizing: border-box;
+  /*   background-color: var(--main_color); */
 }
 
 /* Fonts */
@@ -22,6 +25,11 @@ body {
     font-size: 20px;
     font-family: 'Shadows Into Light Two', cursive;
      font-family: 'Cousine', monospace; 
+}
+
+h2 {
+    margin-block-start: 0;
+    margin-block-end: 0;
 }
 
 button {
@@ -33,6 +41,7 @@ button {
  button:hover {
     filter: brightness(1.3);
     box-shadow: 0px 2px 5px #261f3f;
+    cursor: pointer;
 }
 
 .hero_buttons > button:active {
@@ -56,7 +65,6 @@ button {
     left: 50%;
     transform: translate(-50%, -50%);
     color: white;
-    margin-top: 1.5rem;
   }
 
   .hero_buttons > button {
@@ -75,10 +83,6 @@ button {
   .hero_buttons > button:hover {
     background-color: var(--alfabet_color);
     color: white;
-  }
-
-  #visa-countdown {
-    z-index: 9999;
   }
 
 .alfabetet > button {
@@ -109,18 +113,20 @@ button {
 /* aside */
 .dold_text {
     height: 3rem;
-    padding: 1rem;
+   /*  padding: 1rem; */
     margin: 1rem;
 }
 /* Main */
 main {
-    padding: 1rem;
-    margin: 1rem;
-    background-color: var(--main_color);
+/*     padding: 1rem;
+    margin: 1rem 0; */
+    padding: 2rem;
+    margin: 0;
+    background-color: var(--main_color); 
     display: grid;
     grid-template-areas: 
     "alfabetet hangman";
-    transition: backgroundColor 2s ease;
+    transition: background-color 2s ease;
 }
 .alfabetet {
     grid-area: alfabetet;
@@ -128,16 +134,17 @@ main {
     flex-direction: row;
     row-gap: 0;
     flex-wrap: wrap;
-    
     width: 100%;
 }
 .hangman {
     grid-area: hangman;
     width: 100%;
     transition: all 1s ease;
+    z-index: 1;
 }
+
 .ordbox {
-    min-height: 3rem;
+    height: 3rem;
     background-color: var(--button_color);
     box-shadow: 1px 4px 5px #000;
     border-radius: 10px;
@@ -148,33 +155,43 @@ main {
     align-items: center;
     color: white;
 }
-
+#poangraknare, .ordbox {
+    transition: all .3s ease;
+}
 .poang {
     margin-top: 1rem;
 }
 
 .svg-hela {
-    max-height: 30vh;
+    max-height: 50vh;
 }
+
 .anvanda-bokstaver {
-    transition: 2s ease-in-out .5s;
+    transition: 3s ease-in-out .5s;
 }
+
 .game-over {
     background-image: url(/IMG/dead.svg);
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
-    position: relative;
+    position: relative; 
+    z-index: 9999;
 }
-.game-over::before {
+
+.game-over-top {
+     opacity: 0.5;
+}
+
+.game-over-top::before {
     content: 'GAME OVER!';
     font-size: 3rem;
-    color: rgb(141, 9, 9);
-    text-shadow: 0px 2px 2px #fff;
+    color: var(--footer_color);
+    background-color: white;
     position: absolute;
     width: 100%;
     text-align: center;
-    top: 3rem;
+    top: 0rem;
     height: auto;
     z-index: 999;
 }
@@ -204,22 +221,9 @@ footer {
     width: 100%;
     display: flex;
     justify-content: flex-end;
+    background-color: var(--main_color); 
 }
 
-.nedräknings-knappar, .nedräkning button {
-    height: 0;
-    border: 0;
-    padding: 0 .5rem 0 0;
-    right: 0;
-    right: 0.5rem;
-    top: 4rem;
-    width: 140px;
-    position: absolute;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-}
 
 #fem-min, #tre-min {
 
@@ -228,7 +232,9 @@ footer {
     font-size: 0;
     background: 0;
 }
-
+.nedräkning {
+    transition: all .3s ease-in;
+}
 .nedräkning.synlig {
     padding: 1rem;
     border-radius: 5px;
@@ -253,6 +259,7 @@ footer {
     display: flex;
     flex-direction: row;
     justify-content: center;
+    transition: background-color 1s ease-in;
 }
 .nedräkningsSiffror > article {
     margin: 1rem;
@@ -276,10 +283,3 @@ footer {
     width: 143px;
 } 
 
-.nedräkning .nedräknings-knappar.synlig button:hover {
-    filter: brightness(1.3);
-    box-shadow: 0px 2px 5px #261f3f;
-}
-.nedräkning .nedräknings-knappar.synlig button:focus {
-    outline: none;
-} 

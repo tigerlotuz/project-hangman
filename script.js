@@ -30,6 +30,8 @@ $(document).ready(function(){
     });
 });
 
+const main = document.querySelector('main');
+const body = document.querySelector('body');
 const startaNyOmgångKnapp = document.querySelector('#starta-ny-omgång-knapp');
 const alfabete = document.querySelectorAll('.alfabetet>button');
 const alfabetetSection = document.querySelector('.alfabetet');
@@ -46,7 +48,7 @@ const hangmanBackground = document.querySelector('.hangman');
 //SVG-BILD-DELAR
 const ground = document.getElementById('ground');
 const head = document.getElementById('head');
-const body = document.getElementById('body');
+const hangmanBody = document.getElementById('body');
 const arms = document.getElementById('arms'); 
 const legs = document.getElementById('legs');
 const scaffold = document.getElementById('scaffold');
@@ -65,7 +67,6 @@ const secondsDisplay = document.querySelector('.seconds-display');
 //POÄNG-RÄKNARE OCH OMGÅNGS-RÄKNARE BÖRJAR FRÅN 0
 poängräknareCount=0;
 antalspelOmgångar=0;
-
 
 //RÄKNAR ANTAL FEL-GISSNINGAR
 let antalFel=0;
@@ -107,7 +108,15 @@ nollställOmgång = () => {
         bokstav.classList.remove('klickad');
     }
     //TAR BORT GAME-OVER-CLASS PÅ SVG:N (BAKGRUNDSFÄRG OCH GAME-OVER-TEXT)
-    setTimeout (() => felGissadeBokstäverSynas.classList.remove('game-over'), 4000);
+    setTimeout (() => hangmanBackground.classList.remove('game-over'), 5000);
+   // setTimeout (() => poängräknare.classList.remove('game-over-top'), 5000);
+    setTimeout (() => rättGissadeBokstäverSynas.classList.remove('game-over-top'), 5000);
+    setTimeout(() => main.style.backgroundColor='var(--main_color)', (500));
+      //TA BORT COUNTDOWN-SIFFROR
+    setTimeout(() => {
+        secondsDisplay.style.opacity='0';
+        minutesDisplay.style.opacity='0';
+    }, 500);
     //TAR BORT SJÄLVA SVG-BILDEN
     taBortSvg();
 
@@ -157,11 +166,17 @@ displayFelBokstäver = () => {
         svgHelaBilden.forEach((del, index) => {
             if (index == felBokstäver.indexOf(bokstav)){          
                 del.classList.add('synlig')   
-                hangmanBackground.style.backgroundColor='rgba(147, 75, 107, 0.'+antalFel*2+')';
-                hangmanBackground.style.borderRadius=''+antalFel*2.5+'0%';
-                hangmanBackground.style.padding=''+antalFel+'rem, 0,'+antalFel+'rem';
+                //hangmanBackground.style.backgroundColor='rgba(147, 75, 107, 0.'+antalFel*1+')';
+                main.style.backgroundColor='rgba(147, 75, 107, 0.'+antalFel+1+')';
+                main.style.backgroundColor='rgba(107, 94, 165, 0.'+antalFel+2+')';
+                main.style.backgroundColor='rgba(112, 56, 130, 0.'+antalFel+1+')'; 
+           /*      body.style.backgroundColor='rgba(147, 75, 107, 0.'+antalFel+1+')';
+                body.style.backgroundColor='rgba(107, 94, 165, 0.'+antalFel+2+')';
+                body.style.backgroundColor='rgba(112, 56, 130, 0.'+antalFel+1+')'; */
                 antalFel=index;                   
             } 
+
+            
         })                                                      
     //OM ANTAL FEL ÄR 5 SÅ ÄR HELA SVG:N SYNLIG OCH GUBBEN ÄR HÄNGD => GAME OVER 
         if(antalFel==5) {
@@ -170,8 +185,10 @@ displayFelBokstäver = () => {
             poängräknare.innerHTML=`Poäng: ${poängräknareCount} / ${antalspelOmgångar}`
             //ÄNDRAR BAKGRUNDSFÄRG OCH LÄGGER TILL TEXTEN "GAME OVER!" NÄR GUBBEN ÄR HÄNGD
            setTimeout(() => {
-            felGissadeBokstäverSynas.classList.add('game-over')
-           }, 1000);
+            hangmanBackground.classList.add('game-over')
+       //     poängräknare.classList.add('game-over-top')
+            rättGissadeBokstäverSynas.classList.add('game-over-top')
+           }, 2000);
 
             //NOLLSTÄLLER SPELPLANEN FÖR NÄSTA OMGÅNG
             nollställOmgång();
@@ -181,11 +198,16 @@ displayFelBokstäver = () => {
     
 }
 
+
 //STARTAR NY SPELOMGÅNG 
 let startaNyOmgång = () => {
-    //TA BORT COUNTDOWN-SIFFROR
+     //TA BORT COUNTDOWN-SIFFROR
     secondsDisplay.innerHTML='';
-    minutesDisplay.innerHTML='';
+    minutesDisplay.innerHTML=''; 
+    secondsDisplay.style.opacity='1';
+    minutesDisplay.style.opacity='1';
+
+
     //NOLLSTÄLLER ANTALFEL EFTER EV FÖREGÅENDE SPELOMGÅNG 
     antalFel=0;
     //SLUMPAR FRAM ETT ORD I ORD-LISTAN
@@ -228,10 +250,19 @@ startaNyOmgångKnapp.addEventListener('click', startaNyOmgång);
 //VID KLICK STARTAR FUNKTIONEN "VALDBOKSTAV"
 for (bokstav of alfabete) {
     bokstav.addEventListener('click', valdBokstav);
+    bokstav.addEventListener('click', (e)=>{
+        nedräkning.classList.add('synlig');
+        
+        if(!nedräkning.classList.contains('startad')){
+            countDown(3);
+        }
+        nedräkning.classList.add('startad');
+   
+    })
 }
 
 //COUNTDOWN TIMER
-visaCountdownKnapp.addEventListener('mouseover', () => {
+/* visaCountdownKnapp.addEventListener('mouseover', () => {
     nedräkningsKnappar.classList.toggle('synlig');
     femMinKnapp.classList.toggle('synlig')
     treMinKnapp.classList.toggle('synlig')
@@ -243,7 +274,7 @@ femMinKnapp.addEventListener('click', () => {
 treMinKnapp.addEventListener('click', () => {
     nedräkning.classList.toggle('synlig');
     countDown(3);
-});
+}); */
 
 function countDown(minuter){ 
     //MINUTER OMVANDLADE TILL SEKUNDER
@@ -290,7 +321,9 @@ if (currentTime<1) {
      antalspelOmgångar++;    
      poängräknare.innerHTML=`Poäng: ${poängräknareCount} / ${antalspelOmgångar}`
      //ÄNDRAR BAKGRUNDSFÄRG OCH LÄGGER TILL TEXTEN "GAME OVER!" NÄR GUBBEN ÄR HÄNGD
-     felGissadeBokstäverSynas.classList.add('game-over')
+     hangmanBackground.classList.add('game-over')
+   //  poängräknare.classList.add('game-over-top')
+     rättGissadeBokstäverSynas.classList.add('game-over-top')
      //ANAMERING- TAR BORT BOKSTÄVER EFTER ATT SPELAREN VUNNIT    
      animering();  
      //NOLLSTÄLLER SPELPLANEN FÖR NÄSTA OMGÅNG
