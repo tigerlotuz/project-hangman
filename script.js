@@ -41,6 +41,7 @@ const rättGissadeBokstäverSynas = document.querySelector('.ordbox');
 const rättGissadBokstäverBoxLista = document.querySelectorAll('.ordbox>article');
 const felGissadeBokstäverSynas = document.querySelector('.anvanda-bokstaver');
 const poängräknare = document.querySelector('#poangraknare');
+const hangmanBackground = document.querySelector('.hangman');
 
 //SVG-BILD-DELAR
 const ground = document.getElementById('ground');
@@ -50,6 +51,7 @@ const arms = document.getElementById('arms');
 const legs = document.getElementById('legs');
 const scaffold = document.getElementById('scaffold');
 const svgHelaBilden = document.querySelectorAll('.svg-hela>.barn');
+const svgBakgrund = document.querySelector('.svg-hela');
 
 //POÄNG-RÄKNARE OCH OMGÅNGS-RÄKNARE BÖRJAR FRÅN 0
 poängräknareCount=0;
@@ -150,6 +152,9 @@ displayFelBokstäver = () => {
         svgHelaBilden.forEach((del, index) => {
             if (index == felBokstäver.indexOf(bokstav)){          
                 del.classList.add('synlig')   
+                hangmanBackground.style.backgroundColor='rgba(147, 75, 107, 0.'+antalFel*2+')';
+                hangmanBackground.style.borderRadius=''+antalFel*2.5+'0%';
+                hangmanBackground.style.padding=''+antalFel+'rem, 0,'+antalFel+'rem';
                 antalFel=index;                   
             } 
         })                                                      

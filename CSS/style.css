@@ -91,7 +91,7 @@ main {
     display: grid;
     grid-template-areas: 
     "alfabetet hangman";
-    
+    transition: backgroundColor 2s ease;
 }
 .alfabetet {
     grid-area: alfabetet;
@@ -104,6 +104,7 @@ main {
 .hangman {
     grid-area: hangman;
     width: 100%;
+    transition: all 1s ease;
 }
 .ordbox {
     min-height: 4rem;
@@ -125,7 +126,6 @@ main {
 .poang {
     margin-top: 1rem;
 }
-
 
 .svg-hela {
     max-height: 50vh;
