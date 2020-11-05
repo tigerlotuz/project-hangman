@@ -87,6 +87,7 @@ body {
 /* Main */
 main {
     padding: 1rem;
+    margin: 1rem;
     background-color: var(--main_color);
     display: grid;
     grid-template-areas: 
@@ -97,6 +98,7 @@ main {
     grid-area: alfabetet;
     display: flex;
     flex-direction: row;
+    row-gap: 0;
     flex-wrap: wrap;
     
     width: 100%;
@@ -107,7 +109,7 @@ main {
     transition: all 1s ease;
 }
 .ordbox {
-    min-height: 4rem;
+    min-height: 3rem;
     background-color: var(--button_color);
     box-shadow: 1px 4px 5px #000;
     border-radius: 10px;
@@ -118,17 +120,12 @@ main {
     align-items: center;
 }
 
-.ordbox > article {
-    height: 3rem;
-    width: 3rem;
-    border-bottom: 3px solid black;
-}
 .poang {
     margin-top: 1rem;
 }
 
 .svg-hela {
-    max-height: 50vh;
+    max-height: 30vh;
 }
 .anvanda-bokstaver {
     transition: 2s ease-in-out .5s;

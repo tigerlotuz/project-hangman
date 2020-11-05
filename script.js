@@ -169,6 +169,8 @@ displayFelBokstäver = () => {
            }, 1000);
             //NOLLSTÄLLER SPELPLANEN FÖR NÄSTA OMGÅNG
             nollställOmgång();
+            animering();
+            
         }
     }   
 }
