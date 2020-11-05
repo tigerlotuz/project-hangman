@@ -109,7 +109,6 @@ nollställOmgång = () => {
     }
     //TAR BORT GAME-OVER-CLASS PÅ SVG:N (BAKGRUNDSFÄRG OCH GAME-OVER-TEXT)
     setTimeout (() => hangmanBackground.classList.remove('game-over'), 5000);
-   // setTimeout (() => poängräknare.classList.remove('game-over-top'), 5000);
     setTimeout (() => rättGissadeBokstäverSynas.classList.remove('game-over-top'), 5000);
     setTimeout(() => main.style.backgroundColor='var(--main_color)', (500));
       //TA BORT COUNTDOWN-SIFFROR
@@ -186,7 +185,6 @@ displayFelBokstäver = () => {
             //ÄNDRAR BAKGRUNDSFÄRG OCH LÄGGER TILL TEXTEN "GAME OVER!" NÄR GUBBEN ÄR HÄNGD
            setTimeout(() => {
             hangmanBackground.classList.add('game-over')
-       //     poängräknare.classList.add('game-over-top')
             rättGissadeBokstäverSynas.classList.add('game-over-top')
            }, 2000);
 
@@ -322,7 +320,6 @@ if (currentTime<1) {
      poängräknare.innerHTML=`Poäng: ${poängräknareCount} / ${antalspelOmgångar}`
      //ÄNDRAR BAKGRUNDSFÄRG OCH LÄGGER TILL TEXTEN "GAME OVER!" NÄR GUBBEN ÄR HÄNGD
      hangmanBackground.classList.add('game-over')
-   //  poängräknare.classList.add('game-over-top')
      rättGissadeBokstäverSynas.classList.add('game-over-top')
      //ANAMERING- TAR BORT BOKSTÄVER EFTER ATT SPELAREN VUNNIT    
      animering();  
