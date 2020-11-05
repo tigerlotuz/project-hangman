@@ -87,6 +87,7 @@ body {
 /* Main */
 main {
     padding: 1rem;
+    margin: 1rem;
     background-color: var(--main_color);
     display: grid;
     grid-template-areas: 
