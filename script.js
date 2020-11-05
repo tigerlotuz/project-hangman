@@ -21,6 +21,14 @@ let linjer = [
     '__',
     '__'
 ]
+/* Jquery function till knappen starta */
+$(document).ready(function(){
+/* när knappen klickas på så startar funktionen */
+    $(".button1").click(function(){
+        /* visar eller döljer ".dold_text1" */
+         $(".dold_text1").toggle("fast");
+    });
+});
 
 const startaNyOmgångKnapp = document.querySelector('#starta-ny-omgång-knapp');
 const alfabete = document.querySelectorAll('.alfabetet>button');
@@ -29,8 +37,8 @@ let ordetsBokstäver= [];
 let valdaBokstäver = [];
 let rättBokstäver = [];
 let felBokstäver = [];
-const rättGissadeBokstäverSynas = document.querySelector('.ratt-gissade-bokstaver');
-const rättGissadBokstäverBoxLista = document.querySelectorAll('.ratt-gissade-bokstaver>article');
+const rättGissadeBokstäverSynas = document.querySelector('.ordbox');
+const rättGissadBokstäverBoxLista = document.querySelectorAll('.ordbox>article');
 const felGissadeBokstäverSynas = document.querySelector('.anvanda-bokstaver');
 const poängräknare = document.querySelector('#poangraknare');
 
