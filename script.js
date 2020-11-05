@@ -12,6 +12,7 @@ let ord = ['bacon', 'chans', 'dator', 'fasad', 'glass', 'hemsk', 'jycke',
     'trött', 'vinyl', 'vante', 'vajer', 'yppig', 'yngel', 'ytlig', 'åbäke', 
     'ånger', 'åskar', 'äpple', 'ärlig', 'ärtig', 'ökänd', 'öppen', 'öland',
 ];
+console.log(ord)
 // linjer där bokstäverna hamnar
 let linjer = [
     '__',
@@ -19,11 +20,15 @@ let linjer = [
     '__',
     '__',
     '__'
-]
+];
+
+alfabeteBokstäver = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', 'Å', 'Ä','Ö'];
+
+
 /* Jquery function till startknappen */
 $(document).ready(function(){
 /* när knappen klickas på så startar funktionen */
-    $(".button2").click(function(){
+    $(".button1").click(function(){
         /* visar eller döljer ".dold_text1" */
          $(".dold_text1").toggle();
     });
@@ -31,9 +36,9 @@ $(document).ready(function(){
 
 const main = document.querySelector('main');
 const body = document.querySelector('body');
-const startaNyOmgångKnapp = document.querySelector('#starta-ny-omgång-knapp');  //
-let resetKnapp = document.querySelector('#reset'); //nytt-ord-knapp
-const startKnapp = document.querySelector('#start');//starta-ny-omgång-knapp
+const startaNyOmgångKnapp = document.querySelector('#starta-ny-omgång-knapp'); 
+let resetKnapp = document.querySelector('#reset'); 
+const startKnapp = document.querySelector('#start');
 const alfabete = document.querySelectorAll('.alfabetet>button');
 const alfabetetSection = document.querySelector('.alfabetet');
 let ordetsBokstäver= [];
@@ -70,9 +75,12 @@ const treMinKnapp = document.querySelector('#tre-min');
 const minutesDisplay = document.querySelector('.minutes-display');
 const secondsDisplay = document.querySelector('.seconds-display');
 
+let rättGissatOrd;
+
 //POÄNG-RÄKNARE OCH OMGÅNGS-RÄKNARE BÖRJAR FRÅN 0
 poängräknareCount=0;
 antalspelOmgångar=0;
+
 
 //RÄKNAR ANTAL FEL-GISSNINGAR
 let antalFel=0;
@@ -124,6 +132,9 @@ nollställOmgång = () => {
     }, 500);
     //TAR BORT SJÄLVA SVG-BILDEN
     taBortSvg();
+    for (bokstav of alfabete) {
+        bokstav.innerText=' ';
+    }
 
 };
 
@@ -140,8 +151,10 @@ displayRättBokstäver = (bokstav) => {
     //TAR BORT DE FULA KOMMATECKNEN MELLAN BOKSTÄVERNA
     rättGissadeBokstäverSynas.innerHTML = linjer.join(' ');             
     //KOLLA OM DET SAKNAS BOKSTÄVER ELLER OM ALLA BOKSTÄVER ÄR PÅ PLATS => VUNNIT
-    if (linjer.includes('__')) {                       
-    } else {                                            
+    if (linjer.includes('__')) { 
+        rättGissatOrd=false;                      
+    } else {            
+        rättGissatOrd=true;                                
         poängräknareCount++;
         antalspelOmgångar++;    
         poängräknare.innerHTML=`Poäng: ${poängräknareCount} / ${antalspelOmgångar}`
@@ -202,20 +215,28 @@ displayFelBokstäver = () => {
     
 }
 
+alfabeteBokstäver = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', 'Å', 'Ä','Ö']
 
 //STARTAR NY SPELOMGÅNG 
-let startaNyOmgång = () => {
+ let startaNyOmgång = () => {
+    alfabete.forEach((bokstav, index)=> {
+        bokstav.innerText=alfabeteBokstäver[index];
+    }); 
+
+    rättGissatOrd=false;
      //TA BORT COUNTDOWN-SIFFROR
     secondsDisplay.innerHTML='';
     minutesDisplay.innerHTML=''; 
     secondsDisplay.style.opacity='1';
     minutesDisplay.style.opacity='1';
-
+    //TAR BORT STARTAD-CLASSEN FÖR ATT GÖRA SÅ ATT COUNTDOWN SÄTTER IGÅNG NÄSTA GÅNG MAN KLICKAR PÅ EN BOKSTAV
+    nedräkning.classList.remove('startad')
 
     //NOLLSTÄLLER ANTALFEL EFTER EV FÖREGÅENDE SPELOMGÅNG 
     antalFel=0;
     //SLUMPAR FRAM ETT ORD I ORD-LISTAN
-    slumpaOrd = Math.floor(Math.random()*10);
+    slumpaOrd = Math.floor(Math.random()*80);
+    console.log(Math.floor(Math.random()*80))
     let nyttOrd=ord[slumpaOrd];                             console.log(nyttOrd);
     //DELAR UPP ORDET I BOKSTÄVER                                 
     nyttOrd=nyttOrd.toLowerCase().split('');  
@@ -254,32 +275,22 @@ startKnapp.addEventListener('click', startaNyOmgång);
 //VID KLICK STARTAR FUNKTIONEN "VALDBOKSTAV"
 for (bokstav of alfabete) {
     bokstav.addEventListener('click', valdBokstav);
-    bokstav.addEventListener('click', (e)=>{
-        nedräkning.classList.add('synlig');
-        
-        if(!nedräkning.classList.contains('startad')){
-            countDown(3);
-        }
-        nedräkning.classList.add('startad');
-   
-    })
+    if (!bokstav.classList.contains('klickad')){
+        bokstav.addEventListener('click', (e)=>{
+            nedräkning.classList.add('synlig');
+            
+            if(!nedräkning.classList.contains('startad')){
+                countDown(3);
+            }
+            nedräkning.classList.add('startad');
+    
+        })
+    } else {
+        console.log('klickad')
+    }
 }
 
 //COUNTDOWN TIMER
-/* visaCountdownKnapp.addEventListener('mouseover', () => {
-    nedräkningsKnappar.classList.toggle('synlig');
-    femMinKnapp.classList.toggle('synlig')
-    treMinKnapp.classList.toggle('synlig')
-})
-femMinKnapp.addEventListener('click', () => {
-    nedräkning.classList.toggle('synlig');
-    countDown(5);
-});
-treMinKnapp.addEventListener('click', () => {
-    nedräkning.classList.toggle('synlig');
-    countDown(3);
-}); */
-
 function countDown(minuter){ 
     //MINUTER OMVANDLADE TILL SEKUNDER
     let totalStartTid=minuter*60;
@@ -294,6 +305,8 @@ function countDown(minuter){
         //CURRENT TIME-NEDRÄKNING
         let currentTime=totalStartTid--;
 
+        //OM GISSAT RÄTT ORD 
+        rättGissatOrd ? clearInterval(interval) : console.log(rättGissatOrd);
         //OM GUBBEN ÄR HÄNGD-STOPPAR NEDRÄKNING
         if (antalFel==5){
             clearInterval(interval);
