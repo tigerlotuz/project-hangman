@@ -73,13 +73,18 @@ nollställOmgång = () => {
     valdaBokstäver = [];
     rättBokstäver = [];
     felBokstäver = [];
-    linjer = [
-        '__',
-        '__',
-        '__',
-        '__',
-        '__'
-    ];
+  
+    linjer= [];
+    linjer.push('__','__','__','__','__')
+    
+    //  linjer=linjer.map(index => index.textContent='__')
+    /* ////
+    ////
+    linjer[0]='__';
+    console.log(linjer[0])
+    ////
+    //// */
+
     //EFTER 1 SEKUND NOLLSTÄLLS BOKSTÄVER TILL LINJER IGEN
     setTimeout (() => rättGissadeBokstäverSynas.innerHTML = linjer.join(' '), 1000);
     //TAR BORT KLICKAD-CLASS SÅ ATT DET GÅR ATT KLICKA PÅ BOKSTÄVERNA I NÄSTA SPELOMGÅNG
@@ -114,8 +119,6 @@ displayRättBokstäver = (bokstav) => {
         animering();  
         //NOLLSTÄLLER SPELPLANEN FÖR NÄSTA OMGÅNG
         nollställOmgång();
-        //VISAR RÄTT BOKSTÄVER I HTML:EN OCH TAR BORT KOMMATECKNEN MELLAN VARJE BOKSTAV
-        rättGissadeBokstäverSynas.innerHTML = linjer.join(' ');
     }
 }
 
