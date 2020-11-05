@@ -35,7 +35,7 @@ button {
     box-shadow: 0px 2px 5px #261f3f;
 }
 
-.hero_buttons > button:active, .nedräkningsKnappar>button:active{
+.hero_buttons > button:active {
     border: 2px inset #88878b;
 }
 
@@ -56,9 +56,10 @@ button {
     left: 50%;
     transform: translate(-50%, -50%);
     color: white;
+    margin-top: 1.5rem;
   }
 
-  .hero_buttons > button, .nedräkningsKnappar>button {
+  .hero_buttons > button {
     background-color: var(--button_color);
     border: 2px inset #88878b00;
     border-radius: .5rem;
@@ -74,6 +75,10 @@ button {
   .hero_buttons > button:hover {
     background-color: var(--alfabet_color);
     color: white;
+  }
+
+  #visa-countdown {
+    z-index: 9999;
   }
 
 .alfabetet > button {
@@ -96,6 +101,7 @@ button {
     background-position: center;
     background-repeat: no-repeat;
     position: relative;
+    
   }
 .hero img {
     opacity: 0.5;
@@ -194,19 +200,49 @@ footer {
     transition: all .3s ease-in;
 }
 
+.nedräknings-container {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+}
 
-.nedräkning {
+.nedräknings-knappar, .nedräkning button {
+    height: 0;
+    border: 0;
+    padding: 0 .5rem 0 0;
+    right: 0;
+    right: 0.5rem;
+    top: 4rem;
+    width: 140px;
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+#fem-min, #tre-min {
+
+    height: 0;
+    border: 0;
+    font-size: 0;
+    background: 0;
+}
+
+.nedräkning.synlig {
     padding: 1rem;
     border-radius: 5px;
     width: 500px;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    margin: 2rem auto;
+    margin: 0;
     font-size: 5rem;
     letter-spacing: .5rem;
     text-shadow: 0px 0px 3px rgb(243, 241, 241);
     transition: all .3s ease-in;
+
+    z-index: 0;
 }
 
 .nedräkning > h1 {
@@ -221,26 +257,29 @@ footer {
 .nedräkningsSiffror > article {
     margin: 1rem;
 }
-.nedräkningsKnappar {
-    display: flex;
-    flex-direction: column;
+.nedräknings-knappar.synlig {
     justify-content: center;
     align-items: center;
+     height: 102px; 
+    right: 0.4rem;
+    top: 2.2rem;
+   
 }
-/* .nedräkning button {
-    border-radius: 100%;
-    background-color: rgb(48, 49, 49);
-    color: white;
-    border: none;
-    height: 50px;
-    width: 50px;
-    margin: .5rem 1rem;
-} */
+#tre-min.synlig, #fem-min.synlig {
+    margin: .2rem 0;
+    padding: .5rem;
+    height: unset;
+    right: 0.8rem;
+    font-size: 1rem;
+    background-color: rgba(255, 255, 255, 0.267);
+    border-radius: 5px;
+    width: 143px;
+} 
 
-.nedräkning button:hover {
+.nedräkning .nedräknings-knappar.synlig button:hover {
     filter: brightness(1.3);
     box-shadow: 0px 2px 5px #261f3f;
 }
-.nedräkning button:focus {
+.nedräkning .nedräknings-knappar.synlig button:focus {
     outline: none;
 } 
