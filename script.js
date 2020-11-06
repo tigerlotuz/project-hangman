@@ -23,11 +23,12 @@ let linjer = [
 
 ];
 
-alfabeteBokstäver = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', 'Å', 'Ä','Ö'];
+alfabeteBokstäver = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 
+'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', 'Å', 'Ä','Ö'];
 
 
 
-]
+
 /* Jquery function till startknappen
 $(document).ready(function(){
 /* när knappen klickas på så startar funktionen
@@ -45,7 +46,7 @@ startText = () => {
 const main = document.querySelector('main');
 const body = document.querySelector('body');
 const startaNyOmgångKnapp = document.querySelector('#starta-ny-omgång-knapp'); 
-let resetKnapp = document.querySelector('#reset'); 
+const resetKnapp = document.querySelector('#reset'); 
 const startKnapp = document.querySelector('#start');
 const alfabete = document.querySelectorAll('.alfabetet>button');
 const alfabetetSection = document.querySelector('.alfabetet');
