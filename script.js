@@ -26,18 +26,6 @@ let linjer = [
 alfabeteBokstäver = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 
 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', 'Å', 'Ä','Ö'];
 
-
-
-
-/* Jquery function till startknappen
-$(document).ready(function(){
-/* när knappen klickas på så startar funktionen
-    $(".button2").click(function(){
-        /* visar eller döljer ".dold_text1"
-         $(".dold_text1").toggle();
-    });
-});*/
-
 startText = () => {
     document.getElementById("dold_text1").innerHTML = "Välj bokstäver ur alfabetet.";
   }
@@ -54,14 +42,21 @@ let ordetsBokstäver= [];
 let valdaBokstäver = [];
 let rättBokstäver = [];
 let felBokstäver = [];
+let antalLivesArray = [];
+
+
+let antalLives = document.querySelectorAll('.life');
+
+for (life of antalLives) {
+    antalLivesArray.push(life)
+}
+
 const rättGissadeBokstäverSynas = document.querySelector('.ordbox');
 const rättGissadBokstäverBoxLista = document.querySelectorAll('.ordbox>article');
 const felGissadeBokstäverSynas = document.querySelector('.anvanda-bokstaver');
 const poängräknare = document.querySelector('#poangraknare');
+const livesBox = document.querySelector('.lives-box');
 const hangmanBackground = document.querySelector('.hangman');
-
-
-
 
 
 
@@ -87,17 +82,17 @@ const treMinKnapp = document.querySelector('#tre-min');
 const minutesDisplay = document.querySelector('.minutes-display');
 const secondsDisplay = document.querySelector('.seconds-display');
 
+//NÄR MAN HAR GISSAT RÄTT - ÄNDRAS FRÅN FALSE TILL TRUE 
 let rättGissatOrd;
 
 //POÄNG-RÄKNARE OCH OMGÅNGS-RÄKNARE BÖRJAR FRÅN 0
 poängräknareCount=0;
 antalspelOmgångar=0;
 
-
 //RÄKNAR ANTAL FEL-GISSNINGAR
 let antalFel=0;
 
- getAllIndexes = (ordetsBokstäver, bokstav) => {
+getAllIndexes = (ordetsBokstäver, bokstav) => {
     let indexes = [], i;
     for (i=0; i < ordetsBokstäver.length; i++) 
         if (ordetsBokstäver[i]==bokstav)
@@ -205,8 +200,6 @@ displayFelBokstäver = () => {
                 body.style.backgroundColor='rgba(112, 56, 130, 0.'+antalFel+1+')'; */
                 antalFel=index;                   
             } 
-
-            
         })                                                      
     //OM ANTAL FEL ÄR 5 SÅ ÄR HELA SVG:N SYNLIG OCH GUBBEN ÄR HÄNGD => GAME OVER 
         if(antalFel==5) {
@@ -218,25 +211,38 @@ displayFelBokstäver = () => {
             hangmanBackground.classList.add('game-over')
             rättGissadeBokstäverSynas.classList.add('game-over-top')
            }, 2000);
+           //TAR BORT ETT LIV FRÅN LIVES-LISTAN
+           antalFailadeOmgångar = antalspelOmgångar - poängräknareCount;
+           antalLivesArray[antalFailadeOmgångar-1].style.opacity='0'
+           
+           if (antalFailadeOmgångar==4) {
+               body.innerHTML='<h1>DU ÄR DÖÖÖÖD</h1>'
+           }
 
+
+           
             //NOLLSTÄLLER SPELPLANEN FÖR NÄSTA OMGÅNG
             nollställOmgång();
             animering();
         }
-    }
-    
+    }  
 }
+
+
+
+
 
 alfabeteBokstäver = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', 'Å', 'Ä','Ö']
 
 //STARTAR NY SPELOMGÅNG 
  let startaNyOmgång = () => {
+     //BOKSTÄVERNA PÅ KNAPPARNA KOMMER FRAM NÄR MAN KLICKAT START
     alfabete.forEach((bokstav, index)=> {
         bokstav.innerText=alfabeteBokstäver[index];
     }); 
 
     rättGissatOrd=false;
-     //TA BORT COUNTDOWN-SIFFROR
+     //TA BORT COUNTDOWN-SIFFROR OCH GÖR DEM SYNLIGA OM DE VARIT OSYNLIGA TIDIGARE
     secondsDisplay.innerHTML='';
     minutesDisplay.innerHTML=''; 
     secondsDisplay.style.opacity='1';
@@ -253,9 +259,9 @@ alfabeteBokstäver = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L'
     //DELAR UPP ORDET I BOKSTÄVER                                 
     nyttOrd=nyttOrd.toLowerCase().split('');  
     //PUSHAR VARJE BOKSTAV TILL ORDETSBOKSTÄVER-LISTAN       
-    ordetsBokstäver=nyttOrd.map(bokstav=>bokstav);    
+    ordetsBokstäver=nyttOrd.map(bokstav=>bokstav); 
 }
-
+           
 //FUNKTIONEN SOM GÖR OM DEN KNAPP/BOKSTAV SOM KLICKATS PÅ TILL LITEN BOKSTAV, SEDAN LOOPAR IGENOM ORDETS-BOKSTÄVER-LISTAN
 // VARJE BOKSTAV I LISTAN JÄMFÖRS MED DEN VALDA BOKSTAVEN, OM DE MATCHAR LÄGGS BOKSTAVEN TILL I RÄTTBOKSTÄVER-LISTAN
 //OM DE INTE MATCHAR LÄGGS BOKSTAVEN I FELBOKSTÄVER-LISTAN
@@ -272,7 +278,6 @@ let valdBokstav = (event) => {
             displayRättBokstäver(rättBokstav);
         }
     }
-
 //OM BOKSTAVSMÄTAREN ÄR 0 PUSHAS VALDA BOKSTAVEN TILL FELBOKSTÄVER-LISTAN
     if(bokstavsmätare==0) {
         felBokstäver.push(bokstav)
@@ -291,8 +296,12 @@ for (bokstav of alfabete) {
         bokstav.addEventListener('click', (e)=>{
             nedräkning.classList.add('synlig');
             
-            if(!nedräkning.classList.contains('startad')){
+            if (!nedräkning.classList.contains('startad')&&poängräknareCount<5) {
                 countDown(3);
+                console.log('3min');
+            } else if (!nedräkning.classList.contains('startad')&&poängräknareCount>=5) {
+                countDown(2);
+                console.log('3min');
             }
             nedräkning.classList.add('startad');
     

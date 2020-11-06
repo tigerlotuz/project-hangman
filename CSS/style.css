@@ -147,8 +147,33 @@ main {
     align-items: center;
     color: white;
 }
+
+.lives-box {
+    height: 3rem;
+    width: 95%;
+    min-height: 3rem;
+    margin: 0 .5rem; 
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.life {
+    height: 30px;
+    width: 30px;
+    margin: 0.3rem;
+    border-radius: 100%;
+    background-color: var(--alfabet_color);
+    transition: opacity 1s ease-in-out;
+}
+
+
 #poangraknare, .ordbox {
     transition: all .3s ease;
+}
+#poangraknare{
+    color: var(--header_color);
 }
 .poang {
     margin-top: 1rem;
@@ -202,6 +227,7 @@ footer {
 
 .klickad {
     opacity: 0.5;
+    cursor: default;
 }
 
 .synlig {
@@ -260,14 +286,14 @@ footer {
 .nedräkningsSiffror > article {
     margin: 1rem;
 }
-.nedräknings-knappar.synlig {
+/* .nedräknings-knappar.synlig {
     justify-content: center;
     align-items: center;
      height: 102px; 
     right: 0.4rem;
     top: 2.2rem;
-   
-}
+}*/
+
 #tre-min.synlig, #fem-min.synlig {
     margin: .2rem 0;
     padding: .5rem;
@@ -279,3 +305,6 @@ footer {
     width: 143px;
 } 
 
+.klickad {
+    cursor: none;
+}
