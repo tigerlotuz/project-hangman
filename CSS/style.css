@@ -179,12 +179,17 @@ main {
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
+
     position: relative; 
     z-index: 9999;
 }
 
 .game-over-top {
      opacity: 0.5;
+
+    position: relative;
+    z-index: 998;
+
 }
 
 .game-over-top::before {
