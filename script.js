@@ -20,14 +20,19 @@ let linjer = [
     '__',
     '__'
 ]
-/* Jquery function till startknappen */
+/* Jquery function till startknappen
 $(document).ready(function(){
-/* när knappen klickas på så startar funktionen */
+/* när knappen klickas på så startar funktionen
     $(".button2").click(function(){
-        /* visar eller döljer ".dold_text1" */
+        /* visar eller döljer ".dold_text1"
          $(".dold_text1").toggle();
     });
-});
+});*/
+
+startText = () => {
+    document.getElementById("dold_text1").innerHTML = "Välj bokstäver ur alfabetet.";
+  }
+  document.getElementById("start").addEventListener("click", startText);
 
 let resetKnapp = document.querySelector('#reset');
 const startKnapp = document.querySelector('#start');
