@@ -147,8 +147,33 @@ main {
     align-items: center;
     color: white;
 }
+
+.lives-box {
+    height: 3rem;
+    width: 95%;
+    min-height: 3rem;
+    margin: 0 .5rem; 
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.life {
+    height: 30px;
+    width: 30px;
+    margin: 0.3rem;
+    border-radius: 100%;
+    background-color: var(--alfabet_color);
+    transition: opacity 1s ease-in-out;
+}
+
+
 #poangraknare, .ordbox {
     transition: all .3s ease;
+}
+#poangraknare{
+    color: var(--header_color);
 }
 .poang {
     margin-top: 1rem;
