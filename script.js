@@ -70,8 +70,8 @@ const hangmanBody = document.getElementById('6_body');
 const arms = document.getElementById('7_arms'); 
 const legs = document.getElementById('8_legs');
 const dead = document.getElementById('9_dead');
-const svgHelaBilden = document.querySelectorAll('.svg_hela>.barn');
-const svgBakgrund = document.querySelector('.svg_hela');
+const svgHelaBilden = document.querySelectorAll('#svg_hela>.barn');
+const svgBakgrund = document.querySelector('#svg_hela');
 
 //COUNTDOWN TIMER
 const visaCountdownKnapp = document.querySelector('#visa-countdown');
@@ -146,7 +146,7 @@ nollställOmgång = () => {
     }
 
 };
-rättGissadeBokstäverSynas.innerHTML = linjer;
+rättGissadeBokstäverSynas.innerHTML = linjer.join(' ');
 displayRättBokstäver = (bokstav) => {
                    // console.log(`Rätt bokstäver är: ${ordetsBokstäver}, rätt gissade bokstäver är: ${rättBokstäver}`);
     let korrektaIndex = getAllIndexes(ordetsBokstäver, bokstav);        // console.log(`Index av rätt gissad bokstav ${bokstav.toUpperCase()} i detta varv är är ${korrektaIndex}, det är alltså DETTA/DESSA INDEX vi vill byta ut mot ${bokstav.toUpperCase()}.`);
@@ -221,7 +221,7 @@ displayFelBokstäver = () => {
             } 
         })                                                      
     //OM ANTAL FEL ÄR 5 SÅ ÄR HELA SVG:N SYNLIG OCH GUBBEN ÄR HÄNGD => GAME OVER 
-        if(antalFel==5) {
+        if(antalFel==8) {
             //UPPDATERAR RÄKNAREN FÖR ANTAL SPELOMGÅNGAR
             antalspelOmgångar++;    
             poängräknare.innerHTML=`Poäng: ${poängräknareCount} Spelade omgångar: ${antalspelOmgångar}`
