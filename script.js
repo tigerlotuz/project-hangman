@@ -20,19 +20,27 @@ let linjer = [
     '__',
     '__',
     '__'
+
 ];
 
 alfabeteBokstäver = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', 'Å', 'Ä','Ö'];
 
 
-/* Jquery function till startknappen */
+
+]
+/* Jquery function till startknappen
 $(document).ready(function(){
-/* när knappen klickas på så startar funktionen */
-    $(".button1").click(function(){
-        /* visar eller döljer ".dold_text1" */
+/* när knappen klickas på så startar funktionen
+    $(".button2").click(function(){
+        /* visar eller döljer ".dold_text1"
          $(".dold_text1").toggle();
     });
-});
+});*/
+
+startText = () => {
+    document.getElementById("dold_text1").innerHTML = "Välj bokstäver ur alfabetet.";
+  }
+  document.getElementById("start").addEventListener("click", startText);
 
 const main = document.querySelector('main');
 const body = document.querySelector('body');
