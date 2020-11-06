@@ -94,6 +94,14 @@ let antalRättOmgångar=0;
 let antalFel=0;
 let antalFailadeOmgångar=0;
 
+
+
+//INGEN POINTER PÅ KNAPPARNA NÄR DE INTE ÄR BOKSTÄVER
+for (bokstav of alfabete) {
+    bokstav.classList.add('oklickbar');
+}
+
+
 getAllIndexes = (ordetsBokstäver, bokstav) => {
     let indexes = [], i;
     for (i=0; i < ordetsBokstäver.length; i++) 
@@ -129,6 +137,8 @@ nollställOmgång = () => {
     //TAR BORT KLICKAD-CLASS SÅ ATT DET GÅR ATT KLICKA PÅ BOKSTÄVERNA I NÄSTA SPELOMGÅNG
     for (bokstav of alfabete) {
         bokstav.classList.remove('klickad');
+        bokstav.classList.add('oklickbar');
+        bokstav.innerText='';
     }
     //TAR BORT GAME-OVER-CLASS PÅ SVG:N (BAKGRUNDSFÄRG OCH GAME-OVER-TEXT)
     setTimeout (() => hangmanBackground.classList.remove('game-over'), 5000);
@@ -141,11 +151,8 @@ nollställOmgång = () => {
     }, 500);
     //TAR BORT SJÄLVA SVG-BILDEN
     taBortSvg();
-    for (bokstav of alfabete) {
-        bokstav.innerText='';
-    }
-
 };
+
 rättGissadeBokstäverSynas.innerHTML = linjer.join(' ');
 displayRättBokstäver = (bokstav) => {
                    // console.log(`Rätt bokstäver är: ${ordetsBokstäver}, rätt gissade bokstäver är: ${rättBokstäver}`);
@@ -203,7 +210,6 @@ animering = () => {
       });  
 }
 
-
 displayFelBokstäver = () => {
     //FÖR VARJE FEL BOKSTAV BLIR EN DEL AV SVG:N SYNLIG
     for (bokstav of felBokstäver) {
@@ -251,10 +257,6 @@ displayFelBokstäver = () => {
     }  
 }
 
-
-
-
-
 alfabeteBokstäver = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', 'Å', 'Ä','Ö']
 
 //STARTAR NY SPELOMGÅNG 
@@ -262,6 +264,7 @@ alfabeteBokstäver = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L'
      //BOKSTÄVERNA PÅ KNAPPARNA KOMMER FRAM NÄR MAN KLICKAT START
     alfabete.forEach((bokstav, index)=> {
         bokstav.innerText=alfabeteBokstäver[index];
+        bokstav.classList.remove('oklickbar');
     }); 
 
     rättGissatOrd=false;

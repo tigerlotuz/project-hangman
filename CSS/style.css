@@ -286,25 +286,17 @@ footer {
 .nedräkningsSiffror > article {
     margin: 1rem;
 }
-/* .nedräknings-knappar.synlig {
-    justify-content: center;
-    align-items: center;
-     height: 102px; 
-    right: 0.4rem;
-    top: 2.2rem;
-}*/
 
-#tre-min.synlig, #fem-min.synlig {
-    margin: .2rem 0;
-    padding: .5rem;
-    height: unset;
-    right: 0.8rem;
-    font-size: 1rem;
-    background-color: rgba(255, 255, 255, 0.267);
-    border-radius: 5px;
-    width: 143px;
-} 
+.klickad:hover, .oklickbar:hover {
+    cursor: default;
+    filter: brightness(1);
+}
 
-.klickad {
-    cursor: none;
+.klickad:active, .oklickbar:active {
+    border-width: 2px;
+    border-style: outset;
+    border-bottom-color: rgb(10, 10, 10); 
+    border-right-color: rgb(10, 10, 10);
+    border-left-color: grey;
+    border-top-color: grey;
 }
