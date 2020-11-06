@@ -83,11 +83,13 @@ const secondsDisplay = document.querySelector('.seconds-display');
 let rättGissatOrd;
 
 //POÄNG-RÄKNARE OCH OMGÅNGS-RÄKNARE BÖRJAR FRÅN 0
-poängräknareCount=0;
-antalspelOmgångar=0;
+let poängräknareCount=0;
+let antalspelOmgångar=0;
+let antalRättOmgångar=0;
 
-//RÄKNAR ANTAL FEL-GISSNINGAR
+//RÄKNAR ANTAL FEL-GISSNINGAR BÖRJAR FRÅN 0
 let antalFel=0;
+let antalFailadeOmgångar=0;
 
 getAllIndexes = (ordetsBokstäver, bokstav) => {
     let indexes = [], i;
@@ -137,13 +139,13 @@ nollställOmgång = () => {
     //TAR BORT SJÄLVA SVG-BILDEN
     taBortSvg();
     for (bokstav of alfabete) {
-        bokstav.innerText=' ';
+        bokstav.innerText='';
     }
 
 };
-
+rättGissadeBokstäverSynas.innerHTML = linjer;
 displayRättBokstäver = (bokstav) => {
-    rättGissadeBokstäverSynas.innerHTML = linjer;               // console.log(`Rätt bokstäver är: ${ordetsBokstäver}, rätt gissade bokstäver är: ${rättBokstäver}`);
+                   // console.log(`Rätt bokstäver är: ${ordetsBokstäver}, rätt gissade bokstäver är: ${rättBokstäver}`);
     let korrektaIndex = getAllIndexes(ordetsBokstäver, bokstav);        // console.log(`Index av rätt gissad bokstav ${bokstav.toUpperCase()} i detta varv är är ${korrektaIndex}, det är alltså DETTA/DESSA INDEX vi vill byta ut mot ${bokstav.toUpperCase()}.`);
 
     //SPLICE PÅ FÖRSTA AV VARJE BOKSTAV + TAR BORT DE FULA KOMMATECKNEN
@@ -159,9 +161,26 @@ displayRättBokstäver = (bokstav) => {
         rättGissatOrd=false;                      
     } else {            
         rättGissatOrd=true;                                
-        poängräknareCount++;
-        antalspelOmgångar++;    
-        poängräknare.innerHTML=`Poäng: ${poängräknareCount} / ${antalspelOmgångar}`
+        antalspelOmgångar++;  
+        console.log(antalspelOmgångar)
+        antalRättOmgångar++;  
+        console.log(antalRättOmgångar)
+        if (antalFailadeOmgångar==0) {
+            poängräknareCount+=5;
+        }
+        else if (antalFailadeOmgångar==1) {
+            poängräknareCount+=4;
+        }
+        else if (antalFailadeOmgångar==2) {
+            poängräknareCount+=3;
+        }
+        else if (antalFailadeOmgångar==3) {
+            poängräknareCount+=2;
+        }
+        else if (antalFailadeOmgångar==4) {
+            poängräknareCount+=1;
+        }
+        poängräknare.innerHTML=`Poäng: ${poängräknareCount} Spelade omgångar: ${antalspelOmgångar}`
         //ANAMERING- TAR BORT BOKSTÄVER EFTER ATT SPELAREN VUNNIT    
         animering();  
         //NOLLSTÄLLER SPELPLANEN FÖR NÄSTA OMGÅNG
@@ -202,21 +221,25 @@ displayFelBokstäver = () => {
         if(antalFel==5) {
             //UPPDATERAR RÄKNAREN FÖR ANTAL SPELOMGÅNGAR
             antalspelOmgångar++;    
-            poängräknare.innerHTML=`Poäng: ${poängräknareCount} / ${antalspelOmgångar}`
+            poängräknare.innerHTML=`Poäng: ${poängräknareCount} Spelade omgångar: ${antalspelOmgångar}`
             //ÄNDRAR BAKGRUNDSFÄRG OCH LÄGGER TILL TEXTEN "GAME OVER!" NÄR GUBBEN ÄR HÄNGD
            setTimeout(() => {
             hangmanBackground.classList.add('game-over')
             rättGissadeBokstäverSynas.classList.add('game-over-top')
            }, 2000);
            //TAR BORT ETT LIV FRÅN LIVES-LISTAN
-           antalFailadeOmgångar = antalspelOmgångar - poängräknareCount;
-           antalLivesArray[antalFailadeOmgångar-1].style.opacity='0'
-           
-           if (antalFailadeOmgångar==4) {
-               body.innerHTML='<h1>DU ÄR DÖÖÖÖD</h1>'
+           antalFailadeOmgångar = antalspelOmgångar - antalRättOmgångar;
+           antalLivesArray[antalFailadeOmgångar-1].style.opacity='0';
+            
+           if (antalFailadeOmgångar==5) {
+               setTimeout(() => {
+    //KOMMA PÅ NÅN BRA ANIMERING/BILD!
+                body.innerHTML='<h1>DU ÄR DÖÖÖÖD</h1>'
+               }, 1000);
+               setTimeout(() => {
+                location.reload();
+               }, 4000);
            }
-
-
            
             //NOLLSTÄLLER SPELPLANEN FÖR NÄSTA OMGÅNG
             nollställOmgång();
