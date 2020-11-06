@@ -27,7 +27,7 @@ alfabeteBokstäver = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L'
 
 
 
-]
+
 /* Jquery function till startknappen
 $(document).ready(function(){
 /* när knappen klickas på så startar funktionen
