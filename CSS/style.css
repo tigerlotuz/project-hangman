@@ -20,7 +20,7 @@ body {
 
 body {
     font-size: 20px;
-    ont-family: 'Shadows Into Light Two', cursive;
+    font-family: 'Shadows Into Light Two', cursive;
      font-family: 'Cousine', monospace; 
 }
 
@@ -171,6 +171,7 @@ main {
     background-repeat: no-repeat;
     background-size: cover;
     position: relative;
+    z-index: 998;
 }
 .game-over::before {
     content: 'GAME OVER!';
