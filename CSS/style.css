@@ -22,7 +22,7 @@ body {
 body {
     font-size: 20px;
     font-family: 'Shadows Into Light Two', cursive;
-     font-family: 'Cousine', monospace; 
+    font-family: 'Cousine', monospace; 
 }
 
 h2 {
@@ -88,7 +88,7 @@ button {
 
 .hero {
     height: 50vh;
-    background-image: url("/IMG/poster.png");
+    background-image: url("/IMG/hangman_poster.png");
     background-size: cover;
     background-color: var(--header_color);
     background-position: center;
@@ -154,7 +154,7 @@ main {
     margin-top: 1rem;
 }
 
-.svg-hela {
+.svg_hela {
     max-height: 25vh;
     margin: 1rem;
 }
