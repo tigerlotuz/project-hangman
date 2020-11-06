@@ -210,6 +210,7 @@ footer {
 
 .klickad {
     opacity: 0.5;
+    cursor: default;
 }
 
 .synlig {
@@ -268,14 +269,14 @@ footer {
 .nedräkningsSiffror > article {
     margin: 1rem;
 }
-.nedräknings-knappar.synlig {
+/* .nedräknings-knappar.synlig {
     justify-content: center;
     align-items: center;
      height: 102px; 
     right: 0.4rem;
     top: 2.2rem;
-   
-}
+}*/
+
 #tre-min.synlig, #fem-min.synlig {
     margin: .2rem 0;
     padding: .5rem;
@@ -287,3 +288,6 @@ footer {
     width: 143px;
 } 
 
+.klickad {
+    cursor: none;
+}

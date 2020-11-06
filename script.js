@@ -279,8 +279,12 @@ for (bokstav of alfabete) {
         bokstav.addEventListener('click', (e)=>{
             nedräkning.classList.add('synlig');
             
-            if(!nedräkning.classList.contains('startad')){
+            if (!nedräkning.classList.contains('startad')&&poängräknareCount<5) {
                 countDown(3);
+                console.log('3min');
+            } else if (!nedräkning.classList.contains('startad')&&poängräknareCount>=5) {
+                countDown(2);
+                console.log('3min');
             }
             nedräkning.classList.add('startad');
     
