@@ -263,6 +263,8 @@ footer {
 
 .nedräknings-container {
     width: 100%;
+    min-height: 6rem;
+    padding-top: 1rem;
     display: flex;
     justify-content: flex-start;
     background-color: var(--main_color); 
