@@ -374,7 +374,12 @@ alfabeteBokstäver = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L'
 //STARTAR NY SPELOMGÅNG GENOM ATT SLUMPA FRAM ETT ORD UR ORD-LISTAN
 startKnapp.addEventListener('click', startaNyOmgång);
 
-           
+
+
+
+
+
+
 //FUNKTIONEN SOM GÖR OM DEN KNAPP/BOKSTAV SOM KLICKATS PÅ TILL BOKSTAV, SEDAN LOOPAR IGENOM ORDETS-BOKSTÄVER-LISTAN
 // VARJE BOKSTAV I LISTAN JÄMFÖRS MED DEN VALDA BOKSTAVEN, OM DE MATCHAR LÄGGS BOKSTAVEN TILL I RÄTTBOKSTÄVER-LISTAN
 //OM DE INTE MATCHAR LÄGGS BOKSTAVEN I FELBOKSTÄVER-LISTAN
@@ -385,20 +390,21 @@ let valdBokstav = (event) => {
         event.target.classList.add('klickad');  
         console.log(event.target.classList);          
         let bokstavsmätare=0;                               
-        rättBokstäver=ordetsBokstäver.filter((ordetsBokstav)=>ordetsBokstav==bokstav)  
+        rättBokstäver=ordetsBokstäver.filter((ordetsBokstav)=>ordetsBokstav==bokstav);
         
         //KOLLAR OM DEN VALDA BOKSTAVEN FINNS I RÄTTBOKSTÄVER-LISTAN, OM DEN FINNS BLIR BOKSTAVSMÄTAREN 1, ANNARS ÄR DEN 0
         for (rättBokstav of rättBokstäver) {
-            if(rättBokstav==bokstav){
-                {valdaBokstäver.push(rättBokstav); 
-                event.target.classList.add('bokstav-använd');    
-                console.log(event.target.classList,bokstav)
+            if(rättBokstav==bokstav) {
+                console.log(event.target.classList.contains('klickad'));
+                valdaBokstäver.push(rättBokstav); 
                 bokstavsmätare++;                 
                 displayRättBokstäver(rättBokstav);
-                }
-                
+               /////////////////////////////// event.target.classList.add('bokstav-använd')
+            } else {
+                console.log(event.target.classList.contains('klickad'));
             }
         }
+
         //OM BOKSTAVSMÄTAREN ÄR 0 PUSHAS VALDA BOKSTAVEN TILL FELBOKSTÄVER-LISTAN
         if (bokstavsmätare==0) {
             felBokstäver.push(bokstav)
@@ -408,17 +414,77 @@ let valdBokstav = (event) => {
 }
 
 
+
+
+
+/* 
+
+           
+//FUNKTIONEN SOM GÖR OM DEN KNAPP/BOKSTAV SOM KLICKATS PÅ TILL BOKSTAV, SEDAN LOOPAR IGENOM ORDETS-BOKSTÄVER-LISTAN
+// VARJE BOKSTAV I LISTAN JÄMFÖRS MED DEN VALDA BOKSTAVEN, OM DE MATCHAR LÄGGS BOKSTAVEN TILL I RÄTTBOKSTÄVER-LISTAN
+//OM DE INTE MATCHAR LÄGGS BOKSTAVEN I FELBOKSTÄVER-LISTAN
+let valdBokstav = (event) => {
+    //SER TILL ATT FUNKTIONERNA BARA SÄTTER IGÅNG OM KNAPPENS BOKSTAV SYNS
+    if (event.target.innerHTML!='') {
+        let bokstav = event.target.innerText.toLowerCase();
+        
+        console.log(event.target.classList);          
+        let bokstavsmätare=0;                               
+        rättBokstäver=ordetsBokstäver.filter((ordetsBokstav)=>ordetsBokstav==bokstav)  
+        
+        //KOLLAR OM DEN VALDA BOKSTAVEN FINNS I RÄTTBOKSTÄVER-LISTAN, OM DEN FINNS BLIR BOKSTAVSMÄTAREN 1, ANNARS ÄR DEN 0
+        for (rättBokstav of rättBokstäver) { 
+            
+            //  if(!event.target.classList.contains('klickad')) {
+           
+      //  }
+
+
+      if(rättBokstav==bokstav){
+        
+            valdaBokstäver.push(rättBokstav); 
+        event.target.classList.add('bokstav-använd');    
+        console.log(event.target.classList,bokstav)
+        bokstavsmätare++;                 
+        displayRättBokstäver(rättBokstav);
+        
+
+            
+            if(!event.target.classList.contains('klickad')) {
+            console.log(event.target.classList,bokstav)
+            if(rättBokstav==bokstav){
+                if(!event.target.classList.contains('bokstav-använd')) {
+                
+                }
+            }
+        }
+        
+        //OM BOKSTAVSMÄTAREN ÄR 0 PUSHAS VALDA BOKSTAVEN TILL FELBOKSTÄVER-LISTAN
+        if (bokstavsmätare==0) {
+            felBokstäver.push(bokstav)
+        }
+        displayFelBokstäver();
+    }
+
+    event.target.classList.add('klickad');  
+} */
+
+
 //STARTA COUNTDOWN VID KLICK PÅ BOKSTAV
 let sättIgångNedräkning =() => {
-    nedräkning.classList.add('synlig');
-    if (!nedräkning.classList.contains('startad')&&antalRättOmgångar>=10) {
-        countDown(1);
-    } else if (!nedräkning.classList.contains('startad')&&antalRättOmgångar>=5) {
-        countDown(2);
-    } else if (!nedräkning.classList.contains('startad')&&antalRättOmgångar<5) {
-        countDown(3);
+    if (nedräkning) {
+        nedräkning.classList.add('synlig');
+        if (!nedräkning.classList.contains('startad')&&antalRättOmgångar>=10) {
+            countDown(1);
+        } else if (!nedräkning.classList.contains('startad')&&antalRättOmgångar>=5) {
+            countDown(2);
+        } else if (!nedräkning.classList.contains('startad')&&antalRättOmgångar<5) {
+            countDown(3);
+        }
     }
-    nedräkning.classList.add('startad');
+    if (nedräkning) {
+        nedräkning.classList.add('startad');
+    }
 };
 
 
