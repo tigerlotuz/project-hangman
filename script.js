@@ -11,7 +11,6 @@ let ord = ['bacon', 'chans', 'dator', 'fasad', 'glass', 'hemsk', 'jycke',
     'ånger', 'åskar', 'äpple', 'ärlig', 'ärtig', 'ökänd', 'öppen', 'öland',
 ];
 
-
 // linjer där bokstäverna hamnar
 let linjer = [
     '__',
@@ -93,7 +92,7 @@ taBortSvg = () => {
                del.classList.remove('synlig')
            }  
        }; 
-    }, 2000);
+    }, 1500);
 }
        
 //NOLLSTÄLLNINGSFUNKTION, NOLLSTÄLLER SPELPLAN EFTER VUNNEN/FÖRLORAD OMGÅNG
@@ -123,7 +122,7 @@ nollställOmgång = () => {
     setTimeout(() => {
         secondsDisplay.style.opacity='0';
         minutesDisplay.style.opacity='0';
-    }, 500);
+    }, 1000);
     //TAR BORT SJÄLVA SVG-BILDEN
     taBortSvg();
 };
@@ -166,8 +165,11 @@ displayRättBokstäver = (bokstav) => {
     if(matchArray.length<5) {
         rättGissatOrd=false;                   
     } else {               
-        hangmanBackground.classList.add('game-won');
-        rättGissadeBokstäverSynas.classList.add('game-won-top');
+        setTimeout(() => {
+            hangmanBackground.classList.add('game-won');
+            rättGissadeBokstäverSynas.classList.add('game-won-top');
+           }, 2000);
+
         rättGissatOrd=true;                                
         antalspelOmgångar++;  
         antalRättOmgångar++;  
@@ -225,6 +227,7 @@ displayFelBokstäver = () => {
                 del.classList.add('synlig');   
                 antalFel=index;  
                  main.style.backgroundColor='rgba(112, 56, 130, 0.'+antalFel+1+')';  
+                 console.log(del, index, del.classList)
                               
             } 
         })
@@ -248,7 +251,8 @@ displayFelBokstäver = () => {
 
            if (antalFailadeOmgångar==5) {
                setTimeout(() => {
-                main.style.backgroundImage='url(IMG/dead.svg)';
+             //   main.style.backgroundImage='url(IMG/dead.svg)';
+                main.innerHTML='<img style="display: flex; justify-content:center; align-items:center; width:50vw" src="IMG/dead.svg">';
                }, 1000);
                setTimeout(() => {
                 location.reload();
@@ -292,8 +296,9 @@ alfabeteBokstäver = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L'
     antalFel=0;
 
     //SLUMPAR FRAM ETT ORD I ORD-LISTAN
-    slumpaOrd = Math.floor(Math.random()*80);              
-    let nyttOrd=ord[slumpaOrd];                       
+    slumpaOrd = Math.floor(Math.random()*79);    
+    let nyttOrd=ord[slumpaOrd];           
+    console.log(nyttOrd);            
 
     //DELAR UPP ORDET I BOKSTÄVER                                 
     nyttOrd=nyttOrd.toLowerCase().split('');  
@@ -348,11 +353,14 @@ let sättIgångNedräkning =() => {
     if (nedräkning) {
         nedräkning.classList.add('synlig');
         if (!nedräkning.classList.contains('startad')&&antalRättOmgångar>=10) {
-            countDown(.1667);
+           // countDown(.1667);
+            countDown(10);
         } else if (!nedräkning.classList.contains('startad')&&antalRättOmgångar>=5) {
-            countDown(.25);
+        //    countDown(.25);
+            countDown(15);
         } else if (!nedräkning.classList.contains('startad')&&antalRättOmgångar<5) {
-            countDown(.5);
+          //  countDown(.5);
+            countDown(30);
         }
     }
     if (nedräkning) {
@@ -362,14 +370,14 @@ let sättIgångNedräkning =() => {
 
 
 //COUNTDOWN TIMER
-let countDown = (minuter) => { 
+let countDown = (sekunder) => { 
 
     //MINUTER OMVANDLADE TILL SEKUNDER
-    let totalStartTid=minuter*60;
+    let totalStartTid=sekunder;
     
     //FORMATERING AV HUR TIDEN VISAS INNAN NEDRÄKNINGEN BÖRJAR
-    minutesDisplay.innerHTML = '0' + Math.floor(totalStartTid/60);
-    secondsDisplay.innerHTML= '0' + Math.floor(totalStartTid)%60;
+    minutesDisplay.innerHTML = '00';
+    secondsDisplay.innerHTML= totalStartTid;
     
     //STÄLLER IN NEDRÄKNINGEN: RÄKNAR NER FRÅN TOTALSTARTTID, 1 SEKUND I TAGET
     let interval= setInterval(() => {    
@@ -388,20 +396,20 @@ let countDown = (minuter) => {
         } 
 
         //ÄNDRAR FÄRGEN PÅ SIFFRORNA BEROENDE PÅ HUR LÅNG TID SOM ÄR KVAR
-        färgNedräkning(currentTime, minuter);
+        färgNedräkning(currentTime, sekunder);
 
         //Hur många hela minuter kvar:                   
-        minutesDisplay.innerHTML = '0' + Math.floor(totalStartTid/60)%60;
+        minutesDisplay.innerHTML = '00';
 
         //Hur många sekunder kvar utöver hela minuter:
-        secondsDisplay.innerHTML=Math.floor(totalStartTid)%60;
+        secondsDisplay.innerHTML = totalStartTid;
 
         if(secondsDisplay.innerHTML<10){
-            secondsDisplay.innerHTML="0"+secondsDisplay.innerHTML
+            secondsDisplay.innerHTML = "0" + secondsDisplay.innerHTML
         }
 
         //OM MINDRE ÄN HALVA COUNTDOWN TIDEN HAR GÅTT ÄR "UNDERHALVATIDEN" TRUE, ANNARS FALSE
-        (currentTime>(minuter*60)/2) ? underHalvaTiden = true : underHalvaTiden = false;
+        (currentTime>(sekunder)/2) ? underHalvaTiden = true : underHalvaTiden = false;
 
             //NÄR TIDEN ÄR UTE
         tidenUte(currentTime, interval);
@@ -413,7 +421,9 @@ let countDown = (minuter) => {
 tidenUte = (currentTime, interval) => {
 if (currentTime<1) {
     clearInterval(interval);
-    nedräkning='<h2>Time\'s up!</h2>';
+   // nedräkning.innerHTML='<h2>Time\'s up!</h2>';
+    minutesDisplay.innerText='00'
+    secondsDisplay.innerText='00'
 
      //UPPDATERAR RÄKNAREN FÖR ANTAL SPELOMGÅNGAR
      antalspelOmgångar++;    
@@ -431,12 +441,12 @@ if (currentTime<1) {
 }
 
 //ÄNDRAR FÄRG PÅ SIFFRORNA 
-färgNedräkning = (currentTime, minuter) => {
-    if (currentTime > (minuter*60) * 0.75) {
+färgNedräkning = (currentTime, sekunder) => {
+    if (currentTime > (sekunder) * 0.75) {
         nedräkning.style.color = '#3D943F';
-    } else if (currentTime > (minuter*60) * 0.5) {
+    } else if (currentTime > (sekunder) * 0.5) {
         nedräkning.style.color = '#acac02';
-    } else if (currentTime > (minuter*60) * 0.25) {
+    } else if (currentTime > (sekunder) * 0.25) {
         nedräkning.style.color = 'orange';
     } else {
         nedräkning.style.color = 'rgb(141, 9, 9)';

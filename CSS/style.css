@@ -233,7 +233,7 @@ footer {
     stroke: #423280;
     fill: #261f3f;
     stroke: #261f3f;
-    transition: all .3s ease-in;
+    transition: all 1s ease-in;
 }
 
 .nedräknings-container {
