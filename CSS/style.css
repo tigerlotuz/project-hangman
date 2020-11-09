@@ -191,8 +191,9 @@ main {
 }
 
 .svg_hela {
-    max-height: 25vh;
+    max-height: 15vh;
     margin: 1rem;
+    padding: 1rem;
 }
 
 .anvanda-bokstaver {
