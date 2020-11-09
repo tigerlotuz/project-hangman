@@ -437,6 +437,9 @@ if (currentTime<1) {
      animering();  
      //NOLLSTÄLLER SPELPLANEN FÖR NÄSTA OMGÅNG
      nollställOmgång();
+     //TAR BORT ETT LIV FRÅN LIVES-LISTAN
+     antalFailadeOmgångar = antalspelOmgångar - antalRättOmgångar;
+     antalLivesArray[antalFailadeOmgångar-1].style.opacity='0';  
     }
 }
 
