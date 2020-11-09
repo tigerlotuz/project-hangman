@@ -33,12 +33,9 @@ startText = () => {
   document.getElementById("start").addEventListener("click", startText);
 
 const main = document.querySelector('main');
-const body = document.querySelector('body');
-const startaNyOmgångKnapp = document.querySelector('#starta-ny-omgång-knapp'); 
 const resetKnapp = document.querySelector('#reset'); 
 const startKnapp = document.querySelector('#start');
 const alfabete = document.querySelectorAll('.alfabetet>button');
-const alfabetetSection = document.querySelector('.alfabetet');
 let ordetsBokstäver= [];
 let valdaBokstäver = [];
 let rättBokstäver = [];
@@ -46,29 +43,16 @@ let felBokstäver = [];
 let antalLivesArray = [];
 let antalLives = document.querySelectorAll('.life');
 const rättGissadeBokstäverSynas = document.querySelector('.ordbox');
-const rättGissadBokstäverBoxLista = document.querySelectorAll('.ordbox>article');
-const felGissadeBokstäverSynas = document.querySelector('.anvanda-bokstaver');
 const poängräknare = document.querySelector('#poangraknare');
 const totaltAntalOmgångar = document.querySelector('#antal-omgångar');
 const totaltAntalVunnaOmgångar = document.querySelector('#vunna-omgångar');
-const livesBox = document.querySelector('.lives-box');
 const hangmanBackground = document.querySelector('.hangman');
 
 //SVG-BILD-DELAR
-const ground = document.getElementById('1_ground');
-const pole1 = document.getElementById('2_pole1');
-const pole2 = document.getElementById('3_pole2');
-const pole3 = document.getElementById('4_pole3');
-const head = document.getElementById('5_head');
-const hangmanBody = document.getElementById('6_body');
-const arms = document.getElementById('7_arms'); 
-const legs = document.getElementById('8_legs');
-const dead = document.getElementById('9_dead');
 const svgHelaBilden = document.querySelectorAll('#svg_hela>.barn');
-const svgBakgrund = document.querySelector('#svg_hela');
 
 //COUNTDOWN TIMER
-const visaCountdownKnapp = document.querySelector('#visa-countdown');
+
 let nedräkning = document.querySelector('.nedräkning');
 const minutesDisplay = document.querySelector('.minutes-display');
 const secondsDisplay = document.querySelector('.seconds-display');
