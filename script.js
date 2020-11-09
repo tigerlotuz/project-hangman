@@ -227,10 +227,9 @@ displayFelBokstäver = () => {
         svgHelaBilden.forEach((del, index) => {
             if (index == felBokstäver.indexOf(bokstav)){          
                 del.classList.add('synlig');   
-                main.style.backgroundColor='rgba(147, 75, 107, 0.'+antalFel+1+')';
-                main.style.backgroundColor='rgba(107, 94, 165, 0.'+antalFel+2+')';
-                main.style.backgroundColor='rgba(112, 56, 130, 0.'+antalFel+1+')'; 
-                antalFel=index;                   
+                antalFel=index;  
+                 main.style.backgroundColor='rgba(112, 56, 130, 0.'+antalFel+1+')';  
+                              
             } 
         })
 
@@ -358,11 +357,11 @@ let sättIgångNedräkning =() => {
     if (nedräkning) {
         nedräkning.classList.add('synlig');
         if (!nedräkning.classList.contains('startad')&&antalRättOmgångar>=10) {
-            countDown(1);
+            countDown(.5);
         } else if (!nedräkning.classList.contains('startad')&&antalRättOmgångar>=5) {
-            countDown(2);
+            countDown(1);
         } else if (!nedräkning.classList.contains('startad')&&antalRättOmgångar<5) {
-            countDown(3);
+            countDown(2);
         }
     }
     if (nedräkning) {
