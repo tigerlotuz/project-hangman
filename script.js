@@ -348,11 +348,11 @@ let sättIgångNedräkning =() => {
     if (nedräkning) {
         nedräkning.classList.add('synlig');
         if (!nedräkning.classList.contains('startad')&&antalRättOmgångar>=10) {
-            countDown(.25);
+            countDown(.1667);
         } else if (!nedräkning.classList.contains('startad')&&antalRättOmgångar>=5) {
-            countDown(.5);
+            countDown(.25);
         } else if (!nedräkning.classList.contains('startad')&&antalRättOmgångar<5) {
-            countDown(1);
+            countDown(.5);
         }
     }
     if (nedräkning) {
