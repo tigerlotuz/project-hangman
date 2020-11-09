@@ -25,10 +25,6 @@ let linjer = [
 alfabeteBokstäver = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 
 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', 'Å', 'Ä','Ö'];
 
-startText = () => {
-    document.getElementById("dold_text1").innerHTML = "Välj bokstäver ur alfabetet.";
-  }
-  document.getElementById("start").addEventListener("click", startText);
 
 const main = document.querySelector('main');
 const resetKnapp = document.querySelector('#reset'); 
@@ -46,7 +42,7 @@ const totaltAntalOmgångar = document.querySelector('#antal-omgångar');
 const totaltAntalVunnaOmgångar = document.querySelector('#vunna-omgångar');
 const hangmanBackground = document.querySelector('.hangman');
 
-//SVG-BILD-DELAR
+//SVG-BILD
 const svgHelaBilden = document.querySelectorAll('#svg_hela>.barn');
 
 //COUNTDOWN TIMER
@@ -316,11 +312,6 @@ alfabeteBokstäver = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L'
 }
 //STARTAR NY SPELOMGÅNG GENOM ATT SLUMPA FRAM ETT ORD UR ORD-LISTAN
 startKnapp.addEventListener('click', startaNyOmgång);
-
-
-
-
-
 
 
 //FUNKTIONEN SOM GÖR OM DEN KNAPP/BOKSTAV SOM KLICKATS PÅ TILL BOKSTAV, SEDAN LOOPAR IGENOM ORDETS-BOKSTÄVER-LISTAN
