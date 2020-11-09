@@ -70,9 +70,6 @@ const svgBakgrund = document.querySelector('#svg_hela');
 //COUNTDOWN TIMER
 const visaCountdownKnapp = document.querySelector('#visa-countdown');
 let nedräkning = document.querySelector('.nedräkning');
-/* const nedräkningsKnappar = document.querySelector('.nedräknings-knappar')
-const femMinKnapp = document.querySelector('#fem-min');
-const treMinKnapp = document.querySelector('#tre-min'); */
 const minutesDisplay = document.querySelector('.minutes-display');
 const secondsDisplay = document.querySelector('.seconds-display');
 
@@ -157,8 +154,7 @@ rättGissadeBokstäverSynas.innerHTML = linjer.join(' ');
 
 
 displayRättBokstäver = (bokstav) => {
-                   // console.log(`Rätt bokstäver är: ${ordetsBokstäver}, rätt gissade bokstäver är: ${rättBokstäver}`);
-    let korrektaIndex = getAllIndexes(ordetsBokstäver, bokstav);        // console.log(`Index av rätt gissad bokstav ${bokstav.toUpperCase()} i detta varv är är ${korrektaIndex}, det är alltså DETTA/DESSA INDEX vi vill byta ut mot ${bokstav.toUpperCase()}.`);
+    let korrektaIndex = getAllIndexes(ordetsBokstäver, bokstav);      
 
     //SPLICE PÅ FÖRSTA AV VARJE BOKSTAV + TAR BORT DE FULA KOMMATECKNEN
     linjer.splice(korrektaIndex[0], 1, bokstav).join(' ');
@@ -175,52 +171,23 @@ displayRättBokstäver = (bokstav) => {
     rättGissadeBokstäverSynas.innerHTML = linjer.join(' '); 
 
     //KOLLA OM DET SAKNAS BOKSTÄVER ELLER OM ALLA BOKSTÄVER ÄR PÅ PLATS => VUNNIT
-    for (ordetsBokstav of ordetsBokstäver) {
-        for (aktuellValdBokstav of valdaBokstäver) {
-            if (ordetsBokstav==aktuellValdBokstav) {
-                console.log(ordetsBokstav, aktuellValdBokstav)
-            }
-        }
-    }
-
-
-
-
-////ÄNDRAT FUKTIONEN FÖR ATT RÄKNA UT NÄR ALLA RÄTTA BOKSTÄVER ÄR PÅ PLATS
-//////////////////////
-    //////////////////
     let sorteradOrdetsBokstäver = [];
     let sorteradeValdaBokstäver = [];
     ordetsBokstäver.map(bokstav => sorteradOrdetsBokstäver.push(bokstav));
     valdaBokstäver.map(bokstav => sorteradeValdaBokstäver.push(bokstav));
     sorteradOrdetsBokstäver.sort()
     sorteradeValdaBokstäver.sort()
-    console.log(sorteradOrdetsBokstäver, sorteradeValdaBokstäver)
 
     let matchArray=[];
     let i;
     for (i=0; i<sorteradOrdetsBokstäver.length; i++)
         if (sorteradOrdetsBokstäver[i] == sorteradeValdaBokstäver[i]){
-            console.log(i, sorteradOrdetsBokstäver[i], sorteradeValdaBokstäver[i])
             matchArray.push(i);
     }
-    console.log(matchArray.length)
-    if(matchArray.length==5) {
-        console.log('winner')
-    }
 
-    //////////////////
-
-
-//RADEN NEDAN ÄR DEN SOM BESTÄMDE NÄR ALLA BOKSTÄVER VAR PÅ PLATS FÖRUT, UTIFRÅN HURUVIDA DET FANNS UNDERSTRECK KVAR ELLER EJ, GJORDE ALLT SÅRBART NÄR NÅGOT STECK SAKNADES,
-//TOG BORT DEN RADEN OCH HAR MATCHARRAYEN SOM EN OBEROENDE FAKTOR ISTÄLLET.
-
-  //  if (linjer.includes('__')) { 
     if(matchArray.length<5) {
-        rättGissatOrd=false;           
-        console.log('ordetsBokstäver: ' + ordetsBokstäver, ' - valdaBokstäver: ' + valdaBokstäver)           
-    } else {       
-        console.log('ordetsBokstäver: ' + ordetsBokstäver, ' - valdaBokstäver: ' + valdaBokstäver)           
+        rättGissatOrd=false;                   
+    } else {               
         hangmanBackground.classList.add('game-won');
         rättGissadeBokstäverSynas.classList.add('game-won-top');
         rättGissatOrd=true;                                
@@ -277,14 +244,10 @@ displayFelBokstäver = () => {
     for (bokstav of felBokstäver) {
         svgHelaBilden.forEach((del, index) => {
             if (index == felBokstäver.indexOf(bokstav)){          
-                del.classList.add('synlig')   
-                //hangmanBackground.style.backgroundColor='rgba(147, 75, 107, 0.'+antalFel*1+')';
+                del.classList.add('synlig');   
                 main.style.backgroundColor='rgba(147, 75, 107, 0.'+antalFel+1+')';
                 main.style.backgroundColor='rgba(107, 94, 165, 0.'+antalFel+2+')';
                 main.style.backgroundColor='rgba(112, 56, 130, 0.'+antalFel+1+')'; 
-           /*      body.style.backgroundColor='rgba(147, 75, 107, 0.'+antalFel+1+')';
-                body.style.backgroundColor='rgba(107, 94, 165, 0.'+antalFel+2+')';
-                body.style.backgroundColor='rgba(112, 56, 130, 0.'+antalFel+1+')'; */
                 antalFel=index;                   
             } 
         })
@@ -308,12 +271,11 @@ displayFelBokstäver = () => {
 
            if (antalFailadeOmgångar==5) {
                setTimeout(() => {
-//KOMMA PÅ NÅN BRA ANIMERING/BILD!
-                body.innerHTML='<h1>DU ÄR DÖÖÖÖD</h1>'
+                main.style.backgroundImage='url(IMG/dead.svg)';
                }, 1000);
                setTimeout(() => {
                 location.reload();
-               }, 4000);
+               }, 5000);
            }   
 
             //NOLLSTÄLLER SPELPLANEN FÖR NÄSTA OMGÅNG
@@ -353,8 +315,8 @@ alfabeteBokstäver = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L'
     antalFel=0;
 
     //SLUMPAR FRAM ETT ORD I ORD-LISTAN
-    slumpaOrd = Math.floor(Math.random()*80);               console.log('Ordets index i ord-arrayen: ' + Math.floor(Math.random()*80))
-    let nyttOrd=ord[slumpaOrd];                             console.log('Ordet är: ' + nyttOrd);
+    slumpaOrd = Math.floor(Math.random()*80);              
+    let nyttOrd=ord[slumpaOrd];                       
 
     //DELAR UPP ORDET I BOKSTÄVER                                 
     nyttOrd=nyttOrd.toLowerCase().split('');  
@@ -387,22 +349,17 @@ let valdBokstav = (event) => {
     //SER TILL ATT FUNKTIONERNA BARA SÄTTER IGÅNG OM KNAPPENS BOKSTAV SYNS
     if (event.target.innerHTML!='') {
         let bokstav = event.target.innerText.toLowerCase();
-        event.target.classList.add('klickad');  
-        console.log(event.target.classList);          
+        event.target.classList.add('klickad');      
         let bokstavsmätare=0;                               
         rättBokstäver=ordetsBokstäver.filter((ordetsBokstav)=>ordetsBokstav==bokstav);
         
         //KOLLAR OM DEN VALDA BOKSTAVEN FINNS I RÄTTBOKSTÄVER-LISTAN, OM DEN FINNS BLIR BOKSTAVSMÄTAREN 1, ANNARS ÄR DEN 0
         for (rättBokstav of rättBokstäver) {
             if(rättBokstav==bokstav) {
-                console.log(event.target.classList.contains('klickad'));
                 valdaBokstäver.push(rättBokstav); 
                 bokstavsmätare++;                 
                 displayRättBokstäver(rättBokstav);
-               /////////////////////////////// event.target.classList.add('bokstav-använd')
-            } else {
-                console.log(event.target.classList.contains('klickad'));
-            }
+            } 
         }
 
         //OM BOKSTAVSMÄTAREN ÄR 0 PUSHAS VALDA BOKSTAVEN TILL FELBOKSTÄVER-LISTAN
@@ -412,62 +369,6 @@ let valdBokstav = (event) => {
         displayFelBokstäver();
     }
 }
-
-
-
-
-
-/* 
-
-           
-//FUNKTIONEN SOM GÖR OM DEN KNAPP/BOKSTAV SOM KLICKATS PÅ TILL BOKSTAV, SEDAN LOOPAR IGENOM ORDETS-BOKSTÄVER-LISTAN
-// VARJE BOKSTAV I LISTAN JÄMFÖRS MED DEN VALDA BOKSTAVEN, OM DE MATCHAR LÄGGS BOKSTAVEN TILL I RÄTTBOKSTÄVER-LISTAN
-//OM DE INTE MATCHAR LÄGGS BOKSTAVEN I FELBOKSTÄVER-LISTAN
-let valdBokstav = (event) => {
-    //SER TILL ATT FUNKTIONERNA BARA SÄTTER IGÅNG OM KNAPPENS BOKSTAV SYNS
-    if (event.target.innerHTML!='') {
-        let bokstav = event.target.innerText.toLowerCase();
-        
-        console.log(event.target.classList);          
-        let bokstavsmätare=0;                               
-        rättBokstäver=ordetsBokstäver.filter((ordetsBokstav)=>ordetsBokstav==bokstav)  
-        
-        //KOLLAR OM DEN VALDA BOKSTAVEN FINNS I RÄTTBOKSTÄVER-LISTAN, OM DEN FINNS BLIR BOKSTAVSMÄTAREN 1, ANNARS ÄR DEN 0
-        for (rättBokstav of rättBokstäver) { 
-            
-            //  if(!event.target.classList.contains('klickad')) {
-           
-      //  }
-
-
-      if(rättBokstav==bokstav){
-        
-            valdaBokstäver.push(rättBokstav); 
-        event.target.classList.add('bokstav-använd');    
-        console.log(event.target.classList,bokstav)
-        bokstavsmätare++;                 
-        displayRättBokstäver(rättBokstav);
-        
-
-            
-            if(!event.target.classList.contains('klickad')) {
-            console.log(event.target.classList,bokstav)
-            if(rättBokstav==bokstav){
-                if(!event.target.classList.contains('bokstav-använd')) {
-                
-                }
-            }
-        }
-        
-        //OM BOKSTAVSMÄTAREN ÄR 0 PUSHAS VALDA BOKSTAVEN TILL FELBOKSTÄVER-LISTAN
-        if (bokstavsmätare==0) {
-            felBokstäver.push(bokstav)
-        }
-        displayFelBokstäver();
-    }
-
-    event.target.classList.add('klickad');  
-} */
 
 
 //STARTA COUNTDOWN VID KLICK PÅ BOKSTAV
@@ -527,7 +428,7 @@ let countDown = (minuter) => {
             secondsDisplay.innerHTML="0"+secondsDisplay.innerHTML
         }
 
-//OM MINDRE ÄN HALVA COUNTDOWN TIDEN HAR GÅTT ÄR "UNDERHALVATIDEN" TRUE, ANNARS FALSE
+        //OM MINDRE ÄN HALVA COUNTDOWN TIDEN HAR GÅTT ÄR "UNDERHALVATIDEN" TRUE, ANNARS FALSE
         (currentTime>(minuter*60)/2) ? underHalvaTiden = true : underHalvaTiden = false;
 
             //NÄR TIDEN ÄR UTE
