@@ -191,9 +191,8 @@ main {
 }
 
 .svg_hela {
-    max-height: 15vh;
+    max-height: 25vh;
     margin: 1rem;
-    padding: 1rem;
 }
 
 .anvanda-bokstaver {
@@ -266,6 +265,8 @@ footer {
 
 .nedräknings-container {
     width: 100%;
+    min-height: 6rem;
+    padding-top: 1rem;
     display: flex;
     justify-content: flex-start;
     background-color: var(--main_color); 
