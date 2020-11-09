@@ -116,7 +116,10 @@ main {
     display: grid;
     grid-template-areas: 
     "alfabetet hangman";
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: 75vh;
     transition: background-color 2s ease;
+    align-items: center;
 }
 .alfabetet {
     grid-area: alfabetet;
@@ -124,13 +127,17 @@ main {
     flex-direction: row;
     row-gap: 0;
     flex-wrap: wrap;
-    width: 100%;
+    width: 90%;
+    margin: 0 auto;
+    height: 400px;
+    align-items: stretch;
 }
 .hangman {
     grid-area: hangman;
     width: 100%;
     transition: all 1s ease;
     z-index: 1;
+    max-height: 500px;
 }
 
 .ordbox {
@@ -152,11 +159,15 @@ main {
     height: 3rem;
     width: 95%;
     min-height: 3rem;
-    margin: 0 .5rem; 
+    margin: 1rem .5rem; 
     display: flex;
     flex-direction: row;
     justify-content: flex-end;
     align-items: center;
+}
+.lives-box-h2 {
+    justify-self: start;
+    color: var(--header_color);
 }
 
 .life {
@@ -164,7 +175,7 @@ main {
     width: 30px;
     margin: 0.3rem;
     border-radius: 100%;
-    background-color: var(--alfabet_color);
+    background-color: var(--header_color);
     transition: opacity 1s ease-in-out;
 }
 
@@ -172,7 +183,7 @@ main {
 #poangraknare, .ordbox {
     transition: all .3s ease;
 }
-#poangraknare{
+#poangraknare, #antal-omgångar, #vunna-omgångar {
     color: var(--header_color);
 }
 .poang {
@@ -188,8 +199,8 @@ main {
     transition: 3s ease-in-out .5s;
 }
 
-.game-over {
-    background-image: url(/IMG/dead.svg);
+.game-over, .game-won {
+   
     background-position: center;
     background-repeat: no-repeat;
     background-size: contain;
@@ -197,15 +208,22 @@ main {
     z-index: 9999;
 }
 
-.game-over-top {
+.game-over {
+    background-image: url(/IMG/dead.svg);
+}
+
+.game-won {
+    background-image: url(/IMG/smiling.svg);
+}
+
+.game-over-top, .game-won-top {
      opacity: 0.5;
     position: relative;
     z-index: 998;
 
 }
 
-.game-over-top::before {
-    content: 'GAME OVER!';
+.game-over-top::before,.game-won-top::before {
     font-size: 3rem;
     color: var(--footer_color);
     background-color:var(--main_color);
@@ -215,6 +233,12 @@ main {
     top: 0rem;
     height: auto;
     z-index: 999;
+}
+.game-over-top::before {
+    content: 'GAME OVER!';
+}
+.game-won-top::before {
+    content: 'YOU WON!';
 }
 
 /* Footer */
@@ -235,14 +259,14 @@ footer {
     stroke: #423280;
     fill: #261f3f;
     stroke: #261f3f;
-    
+  /*   (pole-färg= #29171F) */
     transition: all .3s ease-in;
 }
 
 .nedräknings-container {
     width: 100%;
     display: flex;
-    justify-content: flex-end;
+    justify-content: flex-start;
     background-color: var(--main_color); 
 }
 
@@ -260,51 +284,47 @@ footer {
 .nedräkning.synlig {
     padding: 1rem;
     border-radius: 5px;
-    width: 100%;
+    width: 80%;
     display: flex;
     flex-direction: row;
-    justify-content: space-evenly;
+    justify-content: space-between;
     margin: 0;
     font-size: 1.5rem;
     letter-spacing: .2rem;
     text-shadow: 0px 0px 3px rgb(243, 241, 241);
     transition: all .3s ease-in;
-
     z-index: 0;
 }
-
-.nedräkning > h1 {
+.poäng-stats {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+.nedräkning h1 {
     font-size: 1.5rem;
     color: var(--footer_color);
 }
-.nedräkningsSiffror {
+.nedräknings-siffror {
     display: flex;
     flex-direction: row;
     justify-content: center;
     transition: background-color 1s ease-in;
 }
-.nedräkningsSiffror > article {
+.nedräknings-siffror > article {
     margin: 1rem;
 }
-/* .nedräknings-knappar.synlig {
-    justify-content: center;
-    align-items: center;
-     height: 102px; 
-    right: 0.4rem;
-    top: 2.2rem;
-}*/
 
-#tre-min.synlig, #fem-min.synlig {
-    margin: .2rem 0;
-    padding: .5rem;
-    height: unset;
-    right: 0.8rem;
-    font-size: 1rem;
-    background-color: rgba(255, 255, 255, 0.267);
-    border-radius: 5px;
-    width: 143px;
-} 
+.klickad:hover, .oklickbar:hover {
+    cursor: default;
+    cursor: not-allowed;
+    filter: brightness(1);
+}
 
-.klickad {
-    cursor: none;
+.klickad:active, .oklickbar:active {
+    border-width: 2px;
+    border-style: outset;
+    border-bottom-color: rgb(10, 10, 10); 
+    border-right-color: rgb(10, 10, 10);
+    border-left-color: grey;
+    border-top-color: grey;
 }
