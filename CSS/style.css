@@ -33,7 +33,6 @@ h2 {
 button {
     color: var(--main_color);
     transition: all .2s ease;
-    font-family: 'Cousine', monospace;
     font-size: 1.2rem;
     border-radius: .5rem;
     box-shadow: 1px 4px 5px #000;
@@ -80,20 +79,79 @@ button {
     position: relative;
   }
 
-/* Poäng */
+  /* Poäng */
 
-/* Lives */
+.poäng-stats {
+    grid-area: points;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    margin-left: 2.5rem;
+    font-size: 1rem;
+    transition: all .3s ease-in;
+}
+#poangraknare, .ordbox {
+    transition: all .3s ease;
+}
+#poangraknare, #antal-omgångar, #vunna-omgångar {
+    color: var(--header_color);
+}
 
-.lives-box {
+/* Nedräkning */
+
+.nedräkning {
+    width: 100%;
+    min-height: 6rem;
+    justify-content: space-between;
+    display: grid;
+    grid-template-areas: 
+    "points lives countdown";
+    background-color: var(--main_color); 
+}
+#fem-min, #tre-min {
+    height: 0;
+    border: 0;
+    font-size: 0;
+    background: 0;
+}
+.nedräkning.synlig {
+    border-radius: 5px;
+    width: 100%;
+    margin: 0;
+    font-size: 2rem;
+    letter-spacing: .2rem;
+    text-shadow: 0px 0px 3px rgb(243, 241, 241);
+    transition: all .3s ease-in;
+    z-index: 0;
+}
+.nedräknings-siffror {
+    grid-area: countdown;
     display: flex;
     flex-direction: row;
     justify-content: center;
     align-items: center;
+    margin-right: 2rem;
+    transition: background-color 1s ease-in;
+}
+
+
+/* Lives */
+
+.lives-box {
+    grid-area: lives;
+    display: flex;
+    flex-direction: row;
+    align-self: center;
+    position: absolute;
+    top: 45%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 }
 .lives-box-h2 {
     justify-self: start;
     color: var(--header_color);
-    font-size: 1rem;
+    font-size: 1.2rem;
 }
 .life {
     height: 1rem;
@@ -103,15 +161,7 @@ button {
     background-color: var(--header_color);
     transition: opacity 1s ease-in-out;
 }
-#poangraknare, .ordbox {
-    transition: all .3s ease;
-}
-#poangraknare, #antal-omgångar, #vunna-omgångar {
-    color: var(--header_color);
-}
-.poang {
-    margin-top: 1rem;
-}
+
 /* Main */
 
 main {
@@ -125,32 +175,14 @@ main {
     grid-template-areas: 
     "ordbox ordbox"
     "alfabetet hangman";
-    
+    justify-content: center;
+    align-items: center;
     transition: background-color 2s ease;
 }
-.alfabetet {
-    grid-area: alfabetet;
-    display: flex;
-    flex-direction: row;
-    row-gap: 0;
-    flex-wrap: wrap;
-    max-width: 500px;
-    margin: 0;
-    height: 400px;
-    
-}
-.hangman {
-    grid-area: hangman;
-    width: 100%;
-    transition: all 1s ease;
-    z-index: 1;
-    max-height: 400px;
-}
-
 .ordbox {
     grid-area: ordbox;
     height: 3rem;
-    width: 100%;
+    min-width: 100%;
     min-height: 3rem;
     background-color: var(--button_color);
     box-shadow: 1px 4px 5px #000;
@@ -162,41 +194,51 @@ main {
     align-items: center;
     color: var(--main_color);
 }
-
-
-
-
-
+.alfabetet {
+    grid-area: alfabetet;
+    display: flex;
+    flex-direction: row;
+    row-gap: 0;
+    flex-wrap: wrap;
+    max-width: 500px;
+    margin: 0;
+    height: 400px;
+}
+.hangman {
+    grid-area: hangman;
+    width: 100%;
+    transition: all 1s ease;
+    z-index: 1;
+    max-height: 400px;
+}
 .anvanda-bokstaver {
     transition: 3s ease-in-out .5s;
 }
-
+.synlig {
+    fill: #423280;
+    stroke: #423280;
+    fill: #261f3f;
+    stroke: #261f3f;
+    transition: all .3s ease-in;
+}
 .game-over, .game-won {
-   
     background-position: center;
     background-repeat: no-repeat;
     background-size: contain;
     position: relative; 
     z-index: 9999;
 }
-
 .game-over {
     background-image: url(/IMG/dead.svg);
-    
 }
-
 .game-won {
-    background-image: url(/IMG/smiling.svg);
-    
+    background-image: url(/IMG/smiling.svg); 
 }
-
 .game-over-top, .game-won-top {
      opacity: 0.5;
     position: relative;
     z-index: 998;
-
 }
-
 .game-over-top::before,.game-won-top::before {
     font-size: 3rem;
     color: var(--footer_color);
@@ -228,78 +270,11 @@ footer {
     cursor: default;
 }
 
-.synlig {
-    fill: #423280;
-    stroke: #423280;
-    fill: #261f3f;
-    stroke: #261f3f;
-    transition: all .3s ease-in;
-}
-
-.nedräknings-container {
-    max-width: 100%;
-    min-height: 6rem;
-    padding-left: 2rem;
-    padding-right: 2rem;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: var(--main_color); 
-}
-
-
-#fem-min, #tre-min {
-
-    height: 0;
-    border: 0;
-    font-size: 0;
-    background: 0;
-}
-.nedräkning {
-    transition: all .3s ease-in;
-}
-.nedräkning.synlig {
-    align-items: center;
-    border-radius: 5px;
-    width: 100%;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    margin: 0;
-    font-size: 2rem;
-    letter-spacing: .2rem;
-    text-shadow: 0px 0px 3px rgb(243, 241, 241);
-    transition: all .3s ease-in;
-    z-index: 0;
-}
-.poäng-stats {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    font-size: 1.2rem;
-    margin-top: 0;
-}
-.nedräkning h1 {
-    font-size: 1.5rem;
-    color: var(--footer_color);
-}
-.nedräknings-siffror {
-    
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    transition: background-color 1s ease-in;
-}
-.nedräknings-siffror > article {
-    margin: 1rem;
-}
-
 .klickad:hover, .oklickbar:hover {
     cursor: default;
     cursor: not-allowed;
     filter: brightness(1);
 }
-
 .klickad:active, .oklickbar:active {
     border-width: 2px;
     border-style: outset;
