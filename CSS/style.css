@@ -14,7 +14,6 @@ body {
     margin: 0 auto;
     text-align: center;
     box-sizing: border-box;
-  /*   background-color: var(--main_color); */
 }
 
 /* Fonts */
@@ -88,7 +87,7 @@ button {
 
 .hero {
     height: 50vh;
-    background-image: url("/IMG/hangman_poster.png");
+    background-image: url(/IMG/hangman_poster.png);
     background-size: cover;
     background-color: var(--header_color);
     background-position: center;
@@ -190,7 +189,7 @@ main {
     margin-top: 1rem;
 }
 
-.svg_hela {
+.anvanda-bokstaver>svg{
     max-height: 25vh;
     margin: 1rem;
 }
@@ -259,7 +258,6 @@ footer {
     stroke: #423280;
     fill: #261f3f;
     stroke: #261f3f;
-  /*   (pole-färg= #29171F) */
     transition: all .3s ease-in;
 }
 
