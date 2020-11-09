@@ -1,5 +1,3 @@
-
-
 // Orden som datorn kan välja 
 let ord = ['bacon', 'chans', 'dator', 'fasad', 'glass', 'hemsk', 'jycke', 
     'kavel', 'lilja', 'melon', 'alarm', 'alibi', 'altan', 'fabel', 'fikon', 
@@ -418,7 +416,6 @@ let valdBokstav = (event) => {
 
 
 /* 
-
            
 //FUNKTIONEN SOM GÖR OM DEN KNAPP/BOKSTAV SOM KLICKATS PÅ TILL BOKSTAV, SEDAN LOOPAR IGENOM ORDETS-BOKSTÄVER-LISTAN
 // VARJE BOKSTAV I LISTAN JÄMFÖRS MED DEN VALDA BOKSTAVEN, OM DE MATCHAR LÄGGS BOKSTAVEN TILL I RÄTTBOKSTÄVER-LISTAN
@@ -438,8 +435,6 @@ let valdBokstav = (event) => {
             //  if(!event.target.classList.contains('klickad')) {
            
       //  }
-
-
       if(rättBokstav==bokstav){
         
             valdaBokstäver.push(rättBokstav); 
@@ -448,7 +443,6 @@ let valdBokstav = (event) => {
         bokstavsmätare++;                 
         displayRättBokstäver(rättBokstav);
         
-
             
             if(!event.target.classList.contains('klickad')) {
             console.log(event.target.classList,bokstav)
@@ -465,7 +459,6 @@ let valdBokstav = (event) => {
         }
         displayFelBokstäver();
     }
-
     event.target.classList.add('klickad');  
 } */
 
