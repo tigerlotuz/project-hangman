@@ -129,9 +129,10 @@ nollställOmgång = () => {
     taBortSvg();
 };
 
+//TAR BORT FULA KOMMATECKEN UR ARRAYEN OCH INRE HTML:EN OCH HAR MELLANSLAG ISTÄLLET
 rättGissadeBokstäverSynas.innerHTML = linjer.join(' ');
 
-
+//KOLLAR OM DET FINNS FLER LIKADANA BOKSTÄVER I ORDET
 displayRättBokstäver = (bokstav) => {
     let korrektaIndex = getAllIndexes(ordetsBokstäver, bokstav);      
 
@@ -157,16 +158,20 @@ displayRättBokstäver = (bokstav) => {
     sorteradOrdetsBokstäver.sort()
     sorteradeValdaBokstäver.sort()
 
+
+    //KOLLAR OM SAMMA BOKSTÄVER FINNS PÅ SAMMA INDEX I BÅDE SORTERADORDETSBOKSTÄVER OCH SORTREADEVALDABOKSTÄVER
+    //OM DE ÄR SAMMA PUSHAS INDEXET TILL MATCHARRAY
     let matchArray=[];
     let i;
     for (i=0; i<sorteradOrdetsBokstäver.length; i++)
         if (sorteradOrdetsBokstäver[i] == sorteradeValdaBokstäver[i]){
             matchArray.push(i);
     }
-
+    //OM MATCHARRAY INTE ÄR LIKA LÅNG SOM ORDET ÄR RÄTTGISSATORD FALSE
     if(matchArray.length<5) {
         rättGissatOrd=false;                   
-    } else {               
+    } else {    
+            //OM MATCHARRAY ÄR LIKA LÅNG SOM ORDET ÄR RÄTTGISSATORD TRUE           
         setTimeout(() => {
             hangmanBackground.classList.add('game-won');
             rättGissadeBokstäverSynas.classList.add('game-won-top');
@@ -196,6 +201,7 @@ displayRättBokstäver = (bokstav) => {
             poängräknareCount+=3;
         }
 
+        //HUR POÄNGSTATISTIKEN VISAS PÅ SIDAN
         poängräknare.innerHTML=`Poäng: ${poängräknareCount}`;
         totaltAntalVunnaOmgångar.innerHTML=`Vunna omgångar: ${antalRättOmgångar}`;  
         totaltAntalOmgångar.innerHTML=`Spelade omgångar: ${antalspelOmgångar}`;
@@ -251,6 +257,7 @@ displayFelBokstäver = () => {
             poängräknare.innerHTML=`Poäng: ${poängräknareCount}`;
             totaltAntalVunnaOmgångar.innerHTML=`Vunna omgångar: ${antalRättOmgångar}`;  
             totaltAntalOmgångar.innerHTML=`Spelade omgångar: ${antalspelOmgångar}`;
+            
             //ÄNDRAR BAKGRUNDSFÄRG OCH LÄGGER TILL TEXTEN "GAME OVER!" NÄR GUBBEN ÄR HÄNGD
            setTimeout(() => {
             hangmanBackground.classList.add('game-over')
@@ -261,6 +268,7 @@ displayFelBokstäver = () => {
            antalFailadeOmgångar = antalspelOmgångar - antalRättOmgångar;
            antalLivesArray[antalFailadeOmgångar-1].style.opacity='0';    
 
+           //KOLLAR HUR MÅNGA LIV SPELAREN HAR KVAR, OM LIVEN ÄR SLUT ÄR MAN TOTAL-DÖD 
            if (antalFailadeOmgångar==5) {
                setTimeout(() => {
                 main.classList.add('total-död');
@@ -351,17 +359,38 @@ let valdBokstav = (event) => {
     if (event.target.innerHTML!='') {
         let bokstav = event.target.innerText.toLowerCase();
         event.target.classList.add('klickad');      
-        let bokstavsmätare=0;                               
-        rättBokstäver=ordetsBokstäver.filter((ordetsBokstav)=>ordetsBokstav==bokstav);
+        let bokstavsmätare=0;       
+        
+        
+
+        //////
+        //////
+        //////
+
+
+
+     //   rättBokstäver=ordetsBokstäver.filter((ordetsBokstav)=>ordetsBokstav==bokstav);
+       // console.log('rättBokstäver: '+rättBokstäver, 'ordetsBokstäver: '+ordetsBokstäver, 'bokstav: ' +bokstav);
         
         //KOLLAR OM DEN VALDA BOKSTAVEN FINNS I RÄTTBOKSTÄVER-LISTAN, OM DEN FINNS BLIR BOKSTAVSMÄTAREN 1, ANNARS ÄR DEN 0
-        for (rättBokstav of rättBokstäver) {
+        for (rättBokstav of ordetsBokstäver) {
             if(rättBokstav==bokstav) {
                 valdaBokstäver.push(rättBokstav); 
                 bokstavsmätare++;                 
                 displayRättBokstäver(rättBokstav);
+                console.log(rättBokstav)
             } 
         }
+
+
+
+        //////
+        //////
+        //////
+
+
+
+
 
         //OM BOKSTAVSMÄTAREN ÄR 0 PUSHAS VALDA BOKSTAVEN TILL FELBOKSTÄVER-LISTAN
         if (bokstavsmätare==0) {
