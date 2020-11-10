@@ -29,6 +29,8 @@ const main = document.querySelector('main');
 const resetKnapp = document.querySelector('#reset'); 
 const startKnapp = document.querySelector('#start');
 const alfabete = document.querySelectorAll('.alfabetet>button');
+const alfabetetSektion = document.querySelector('.alfabetet');
+const body = document.querySelector('body');
 let ordetsBokstäver= [];
 let valdaBokstäver = [];
 let rättBokstäver = [];
@@ -227,10 +229,65 @@ displayFelBokstäver = () => {
                 del.classList.add('synlig');   
                 antalFel=index;  
                  main.style.backgroundColor='rgba(112, 56, 130, 0.'+antalFel+1+')';  
-                 console.log(del, index, del.classList)
-                              
+
+
+                ////////////////////////////
+                ////////////////////////////
+                ////////////////////////////
+                ////////////////////////////
+                ////////////////////////////
+                ////////////////////////////
+
+
+                 anime({
+                    targets: '.barn-'+(index+1)+' path',
+                    strokeDashoffset: [anime.setDashoffset, 0],
+                    easing: 'easeInOutSine',
+                    duration: 1500,
+                    delay: function(el, i) { return i * 450 },
+                    direction: 'normal',
+                    loop: 1
+                  });
+            
+
+
+                ////////////////////////////
+                ////////////////////////////
+                ////////////////////////////
+                ////////////////////////////
+                ////////////////////////////
+                ////////////////////////////
+
+                anime({
+                    targets: 'svg stop',
+                    stopColor: 'rgb(255, 230, 0)', 
+                    offset: "40%",
+                    easing: 'easeInOutQuad',
+                    direction: 'alternate',
+                    duration: 500,
+                    loop: 10,
+                    delay: 100
+                });
+
+                ////////////////////////////
+                ////////////////////////////
+                ////////////////////////////
+                ////////////////////////////
+                ////////////////////////////
+                  del.classList.remove('barn-'+(index+1)+'')
+
             } 
         })
+
+
+
+                ////////////////////////////
+                ////////////////////////////
+                ////////////////////////////
+                ////////////////////////////
+                ////////////////////////////
+                ////////////////////////////
+
 
     //OM ANTAL FEL ÄR 5 SÅ ÄR HELA SVG:N SYNLIG OCH GUBBEN ÄR HÄNGD => GAME OVER 
         if(antalFel==8) {
@@ -251,8 +308,11 @@ displayFelBokstäver = () => {
 
            if (antalFailadeOmgångar==5) {
                setTimeout(() => {
-             //   main.style.backgroundImage='url(IMG/dead.svg)';
-                main.innerHTML='<img style="display: flex; justify-content:center; align-items:center; width:50vw" src="IMG/dead.svg">';
+                main.classList.add('total-död');
+                rättGissadeBokstäverSynas.style.opacity='0';
+                rättGissadeBokstäverSynas.style.height='0';
+                alfabetetSektion.style.display='none';
+                body.style.backgroundColor='var(--main_color)';
                }, 1000);
                setTimeout(() => {
                 location.reload();
@@ -265,6 +325,7 @@ displayFelBokstäver = () => {
         }
     }  
 }
+
 
 alfabeteBokstäver = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', 'Å', 'Ä','Ö']
 
@@ -291,6 +352,7 @@ alfabeteBokstäver = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L'
     if(nedräkning){
         nedräkning.classList.remove('startad');
     }
+    
 
     //NOLLSTÄLLER ANTALFEL EFTER EV FÖREGÅENDE SPELOMGÅNG 
     antalFel=0;
@@ -421,7 +483,6 @@ let countDown = (sekunder) => {
 tidenUte = (currentTime, interval) => {
 if (currentTime<1) {
     clearInterval(interval);
-   // nedräkning.innerHTML='<h2>Time\'s up!</h2>';
     minutesDisplay.innerText='00'
     secondsDisplay.innerText='00'
 
