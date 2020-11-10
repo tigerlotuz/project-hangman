@@ -177,9 +177,10 @@ displayRättBokstäver = (bokstav) => {
             rättGissadeBokstäverSynas.classList.add('game-won-top');
            }, 2000);
 
-        rättGissatOrd=true;                                
+        rättGissatOrd=true;  
         antalspelOmgångar++;  
         antalRättOmgångar++;  
+
         if (antalFailadeOmgångar==0) {
             poängräknareCount+=5;
         }
@@ -293,9 +294,6 @@ displayFelBokstäver = () => {
 };
 
 
-alfabeteBokstäver = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', 'Å', 'Ä','Ö']
-
-
 //STARTAR NY SPELOMGÅNG 
 let startaNyOmgång = () => {
 
@@ -361,17 +359,6 @@ let valdBokstav = (event) => {
         event.target.classList.add('klickad');      
         let bokstavsmätare=0;       
         
-        
-
-        //////
-        //////
-        //////
-
-
-
-     //   rättBokstäver=ordetsBokstäver.filter((ordetsBokstav)=>ordetsBokstav==bokstav);
-       // console.log('rättBokstäver: '+rättBokstäver, 'ordetsBokstäver: '+ordetsBokstäver, 'bokstav: ' +bokstav);
-        
         //KOLLAR OM DEN VALDA BOKSTAVEN FINNS I RÄTTBOKSTÄVER-LISTAN, OM DEN FINNS BLIR BOKSTAVSMÄTAREN 1, ANNARS ÄR DEN 0
         for (rättBokstav of ordetsBokstäver) {
             if(rättBokstav==bokstav) {
@@ -381,15 +368,6 @@ let valdBokstav = (event) => {
                 console.log(rättBokstav)
             } 
         }
-
-
-
-        //////
-        //////
-        //////
-
-
-
 
 
         //OM BOKSTAVSMÄTAREN ÄR 0 PUSHAS VALDA BOKSTAVEN TILL FELBOKSTÄVER-LISTAN
