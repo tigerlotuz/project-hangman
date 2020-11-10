@@ -177,9 +177,10 @@ displayRättBokstäver = (bokstav) => {
             rättGissadeBokstäverSynas.classList.add('game-won-top');
            }, 2000);
 
-        rättGissatOrd=true;                                
+        rättGissatOrd=true;  
         antalspelOmgångar++;  
         antalRättOmgångar++;  
+
         if (antalFailadeOmgångar==0) {
             poängräknareCount+=5;
         }
