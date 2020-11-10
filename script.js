@@ -70,12 +70,12 @@ let antalFailadeOmgångar=0;
 //PUSHAR ALLA LIVES TILL ARRAY:EN
 for (life of antalLives) {
     antalLivesArray.push(life)
-}
+};
 
 //INGEN POINTER PÅ KNAPPARNA NÄR DE INTE ÄR BOKSTÄVER
 for (bokstav of alfabete) {
     bokstav.classList.add('oklickbar');
-}
+};
 
 //HITTA ALLA INDEX AV RÄTT GISSAD BOKSTAV 
 getAllIndexes = (ordetsBokstäver, bokstav) => {
@@ -84,7 +84,7 @@ getAllIndexes = (ordetsBokstäver, bokstav) => {
         if (ordetsBokstäver[i]==bokstav)
             indexes.push(i);
             return indexes;
-}
+};
         
  //TAR BORT HÄNGA-GUBBE-SVG:N
 taBortSvg = () => {
@@ -95,7 +95,7 @@ taBortSvg = () => {
            }  
        }; 
     }, 1500);
-}
+};
        
 //NOLLSTÄLLNINGSFUNKTION, NOLLSTÄLLER SPELPLAN EFTER VUNNEN/FÖRLORAD OMGÅNG
 nollställOmgång = () => {
@@ -113,7 +113,7 @@ nollställOmgång = () => {
         bokstav.classList.remove('klickad');
         bokstav.classList.add('oklickbar');
         bokstav.innerText='';
-    }
+    };
     //TAR BORT GAME-OVER-CLASS/GAME-WON-CLASS PÅ SVG:N (BAKGRUNDSFÄRG OCH GAME-OVER-TEXT)
     setTimeout (() => hangmanBackground.classList.remove('game-over'), 5000);
     setTimeout (() => hangmanBackground.classList.remove('game-won'), 5000);
@@ -205,10 +205,10 @@ displayRättBokstäver = (bokstav) => {
         //NOLLSTÄLLER SPELPLANEN FÖR NÄSTA OMGÅNG
         nollställOmgång();
     }
-}
+};
 
 
-//SLUTANIMERING EFTER RÄTT GISSAT ORD
+//SLUTANIMERING EFTER RÄTT GISSAT ORD -> RUTORNA KRYMPER OCH KOMMER TILLBAKA
 animering = () => {
      anime({
         targets: '.alfabetet>button',
@@ -218,7 +218,7 @@ animering = () => {
         ],
         delay: anime.stagger(200, {grid: [6, 5], from: 'center'})
       });  
-}
+};
 
 
 displayFelBokstäver = () => {
@@ -230,16 +230,7 @@ displayFelBokstäver = () => {
                 antalFel=index;  
                  main.style.backgroundColor='rgba(112, 56, 130, 0.'+antalFel+1+')';  
 
-
-                ////////////////////////////
-                ////////////////////////////
-                ////////////////////////////
-                ////////////////////////////
-                ////////////////////////////
-                ////////////////////////////
-
-
-                 anime({
+                  anime({
                     targets: '.barn-'+(index+1)+' path',
                     strokeDashoffset: [anime.setDashoffset, 0],
                     easing: 'easeInOutSine',
@@ -248,48 +239,12 @@ displayFelBokstäver = () => {
                     direction: 'normal',
                     loop: 1
                   });
-            
 
-
-                ////////////////////////////
-                ////////////////////////////
-                ////////////////////////////
-                ////////////////////////////
-                ////////////////////////////
-                ////////////////////////////
-
-                anime({
-                    targets: 'svg stop',
-                    stopColor: 'rgb(255, 230, 0)', 
-                    offset: "40%",
-                    easing: 'easeInOutQuad',
-                    direction: 'alternate',
-                    duration: 500,
-                    loop: 10,
-                    delay: 100
-                });
-
-                ////////////////////////////
-                ////////////////////////////
-                ////////////////////////////
-                ////////////////////////////
-                ////////////////////////////
-                  del.classList.remove('barn-'+(index+1)+'')
-
-            } 
+                del.classList.remove('barn-'+(index+1)+'') 
+            }; 
         })
 
-
-
-                ////////////////////////////
-                ////////////////////////////
-                ////////////////////////////
-                ////////////////////////////
-                ////////////////////////////
-                ////////////////////////////
-
-
-    //OM ANTAL FEL ÄR 5 SÅ ÄR HELA SVG:N SYNLIG OCH GUBBEN ÄR HÄNGD => GAME OVER 
+        //OM ANTAL FEL ÄR 8 SÅ ÄR HELA SVG:N SYNLIG OCH GUBBEN ÄR HÄNGD => GAME OVER 
         if(antalFel==8) {
             //UPPDATERAR RÄKNAREN FÖR ANTAL SPELOMGÅNGAR
             antalspelOmgångar++;    
@@ -300,7 +255,7 @@ displayFelBokstäver = () => {
            setTimeout(() => {
             hangmanBackground.classList.add('game-over')
             rättGissadeBokstäverSynas.classList.add('game-over-top')
-           }, 2000);
+           }, 3000);
 
            //TAR BORT ETT LIV FRÅN LIVES-LISTAN
            antalFailadeOmgångar = antalspelOmgångar - antalRättOmgångar;
@@ -313,25 +268,28 @@ displayFelBokstäver = () => {
                 rättGissadeBokstäverSynas.style.height='0';
                 alfabetetSektion.style.display='none';
                 body.style.backgroundColor='var(--main_color)';
-               }, 1000);
+               }, 2000);
                setTimeout(() => {
                 location.reload();
-               }, 5000);
+               }, 6000);
            }   
 
             //NOLLSTÄLLER SPELPLANEN FÖR NÄSTA OMGÅNG
-            nollställOmgång();
-            animering();
+            
+            setTimeout(() => {
+                animering();
+                nollställOmgång();
+            }, 1000);
         }
     }  
-}
+};
 
 
 alfabeteBokstäver = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', 'Å', 'Ä','Ö']
 
 
 //STARTAR NY SPELOMGÅNG 
- let startaNyOmgång = () => {
+let startaNyOmgång = () => {
 
      //BOKSTÄVERNA PÅ KNAPPARNA KOMMER FRAM NÄR MAN KLICKAT START
     alfabete.forEach((bokstav, index)=> {
@@ -342,7 +300,7 @@ alfabeteBokstäver = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L'
     }); 
     rättGissatOrd=false;
 
-     //TA BORT COUNTDOWN-SIFFROR OCH GÖR DEM SYNLIGA OM DE VARIT OSYNLIGA TIDIGARE
+    //TA BORT COUNTDOWN-SIFFROR OCH GÖR DEM SYNLIGA OM DE VARIT OSYNLIGA TIDIGARE
     secondsDisplay.innerHTML='';
     minutesDisplay.innerHTML=''; 
     secondsDisplay.style.opacity='1';
@@ -351,8 +309,12 @@ alfabeteBokstäver = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L'
     //TAR BORT STARTAD-CLASSEN FÖR ATT GÖRA SÅ ATT COUNTDOWN SÄTTER IGÅNG NÄSTA GÅNG MAN KLICKAR PÅ EN BOKSTAV
     if(nedräkning){
         nedräkning.classList.remove('startad');
-    }
-    
+    };
+
+    //SÄTTER TILLBAKA URSPRUNGLIGA CLASSER PÅ HÄNGA-GUBBEN-SVG:N FÖR ATT ANIMATIONEN SKA FUNKA IGEN
+    svgHelaBilden.forEach((del, index) => { 
+        del.classList.add('barn-'+(index+1)+'') 
+    });
 
     //NOLLSTÄLLER ANTALFEL EFTER EV FÖREGÅENDE SPELOMGÅNG 
     antalFel=0;
@@ -375,8 +337,8 @@ alfabeteBokstäver = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L'
         if (!bokstav.classList.contains('klickad')){
             bokstav.addEventListener('click', sättIgångNedräkning);
         }
-    }
-}
+    };
+};
 //STARTAR NY SPELOMGÅNG GENOM ATT SLUMPA FRAM ETT ORD UR ORD-LISTAN
 startKnapp.addEventListener('click', startaNyOmgång);
 
@@ -407,7 +369,7 @@ let valdBokstav = (event) => {
         }
         displayFelBokstäver();
     }
-}
+};
 
 
 //STARTA COUNTDOWN VID KLICK PÅ BOKSTAV
@@ -453,7 +415,7 @@ let countDown = (sekunder) => {
             clearInterval(interval);
         }
         //OM GUBBEN ÄR HÄNGD-STOPPAR NEDRÄKNING
-        if (antalFel==5){
+        if (antalFel==8){
             clearInterval(interval);
         } 
 
@@ -476,33 +438,40 @@ let countDown = (sekunder) => {
             //NÄR TIDEN ÄR UTE
         tidenUte(currentTime, interval);
     },1000); 
-} 
+}; 
 
 
 //NÄR TIDEN ÄR UTE
 tidenUte = (currentTime, interval) => {
-if (currentTime<1) {
-    clearInterval(interval);
-    minutesDisplay.innerText='00'
-    secondsDisplay.innerText='00'
+    if (currentTime<1) {
+        clearInterval(interval);
+        minutesDisplay.innerText='00'
+        secondsDisplay.innerText='00'
 
-     //UPPDATERAR RÄKNAREN FÖR ANTAL SPELOMGÅNGAR
-     antalspelOmgångar++;    
-     poängräknare.innerHTML=`Poäng: ${poängräknareCount} / ${antalspelOmgångar}`;
+        //UPPDATERAR RÄKNAREN FÖR ANTAL SPELOMGÅNGAR
+        antalspelOmgångar++;    
+        poängräknare.innerHTML=`Poäng: ${poängräknareCount}`;
+        totaltAntalVunnaOmgångar.innerHTML=`Vunna omgångar: ${antalRättOmgångar}`;  
+        totaltAntalOmgångar.innerHTML=`Spelade omgångar: ${antalspelOmgångar}`;
 
-     //ÄNDRAR BAKGRUNDSFÄRG OCH LÄGGER TILL TEXTEN "GAME OVER!" NÄR GUBBEN ÄR HÄNGD
-     hangmanBackground.classList.add('game-over');
-     rättGissadeBokstäverSynas.classList.add('game-over-top');
+        //ÄNDRAR BAKGRUNDSFÄRG OCH LÄGGER TILL TEXTEN "GAME OVER!" NÄR GUBBEN ÄR HÄNGD
+        setTimeout(() => {
+            hangmanBackground.classList.add('game-over')
+            rättGissadeBokstäverSynas.classList.add('game-over-top')
+        }, 3000);
 
-     //ANAMERING- TAR BORT BOKSTÄVER EFTER ATT SPELAREN VUNNIT    
-     animering();  
-     //NOLLSTÄLLER SPELPLANEN FÖR NÄSTA OMGÅNG
-     nollställOmgång();
-     //TAR BORT ETT LIV FRÅN LIVES-LISTAN
-     antalFailadeOmgångar = antalspelOmgångar - antalRättOmgångar;
-     antalLivesArray[antalFailadeOmgångar-1].style.opacity='0';  
-    }
-}
+        //NOLLSTÄLLER SPELPLANEN FÖR NÄSTA OMGÅNG
+        
+        setTimeout(() => {
+            animering();
+            nollställOmgång();
+        }, 1000);
+
+        //TAR BORT ETT LIV FRÅN LIVES-LISTAN
+        antalFailadeOmgångar = antalspelOmgångar - antalRättOmgångar;
+        antalLivesArray[antalFailadeOmgångar-1].style.opacity='0';  
+        };
+};
 
 //ÄNDRAR FÄRG PÅ SIFFRORNA 
 färgNedräkning = (currentTime, sekunder) => {
@@ -515,11 +484,11 @@ färgNedräkning = (currentTime, sekunder) => {
     } else {
         nedräkning.style.color = 'rgb(141, 9, 9)';
     }    
-}
+};
 
 
 // Reset på sidan
 let reset = () => {
     location.reload();
-}
+};
 resetKnapp.addEventListener('click', reset);
