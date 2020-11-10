@@ -328,7 +328,6 @@ let startaNyOmgång = () => {
     //SLUMPAR FRAM ETT ORD I ORD-LISTAN
     slumpaOrd = Math.floor(Math.random()*79);    
     let nyttOrd=ord[slumpaOrd];           
-    console.log(nyttOrd);            
 
     //DELAR UPP ORDET I BOKSTÄVER                                 
     nyttOrd=nyttOrd.toLowerCase().split('');  
@@ -365,7 +364,6 @@ let valdBokstav = (event) => {
                 valdaBokstäver.push(rättBokstav); 
                 bokstavsmätare++;                 
                 displayRättBokstäver(rättBokstav);
-                console.log(rättBokstav)
             } 
         }
 
@@ -384,13 +382,10 @@ let sättIgångNedräkning =() => {
     if (nedräkning) {
         nedräkning.classList.add('synlig');
         if (!nedräkning.classList.contains('startad')&&antalRättOmgångar>=10) {
-           // countDown(.1667);
             countDown(10);
         } else if (!nedräkning.classList.contains('startad')&&antalRättOmgångar>=5) {
-        //    countDown(.25);
             countDown(15);
         } else if (!nedräkning.classList.contains('startad')&&antalRättOmgångar<5) {
-          //  countDown(.5);
             countDown(30);
         }
     }
