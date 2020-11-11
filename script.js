@@ -267,10 +267,18 @@ displayFelBokstäver = () => {
 
            //TAR BORT ETT LIV FRÅN LIVES-LISTAN
            antalFailadeOmgångar = antalspelOmgångar - antalRättOmgångar;
-           antalLivesArray[antalFailadeOmgångar-1].style.opacity='0';    
+           antalLivesArray[antalFailadeOmgångar-1].style.opacity='0';  
+
+
+            //NOLLSTÄLLER SPELPLANEN FÖR NÄSTA OMGÅNG
+            
+            setTimeout(() => {
+                animering();
+                nollställOmgång();
+            }, 1000);
 
            //KOLLAR HUR MÅNGA LIV SPELAREN HAR KVAR, OM LIVEN ÄR SLUT ÄR MAN TOTAL-DÖD 
-           if (antalFailadeOmgångar==5) {
+           if (antalFailadeOmgångar>=5) {
                setTimeout(() => {
                 main.classList.add('total-död');
                 rättGissadeBokstäverSynas.style.opacity='0';
@@ -283,12 +291,6 @@ displayFelBokstäver = () => {
                }, 6000);
            }   
 
-            //NOLLSTÄLLER SPELPLANEN FÖR NÄSTA OMGÅNG
-            
-            setTimeout(() => {
-                animering();
-                nollställOmgång();
-            }, 1000);
         }
     }  
 };
@@ -473,6 +475,20 @@ tidenUte = (currentTime, interval) => {
         antalFailadeOmgångar = antalspelOmgångar - antalRättOmgångar;
         antalLivesArray[antalFailadeOmgångar-1].style.opacity='0';  
         };
+
+             //KOLLAR HUR MÅNGA LIV SPELAREN HAR KVAR, OM LIVEN ÄR SLUT ÄR MAN TOTAL-DÖD 
+             if (antalFailadeOmgångar>=5) {
+                setTimeout(() => {
+                 main.classList.add('total-död');
+                 rättGissadeBokstäverSynas.style.opacity='0';
+                 rättGissadeBokstäverSynas.style.height='0';
+                 alfabetetSektion.style.display='none';
+                 body.style.backgroundColor='var(--main_color)';
+                }, 2000);
+                setTimeout(() => {
+                 location.reload();
+                }, 6000);
+            }  
 };
 
 //ÄNDRAR FÄRG PÅ SIFFRORNA 
