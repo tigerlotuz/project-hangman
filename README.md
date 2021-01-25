@@ -1,4 +1,3 @@
-# Hanga-gubbe
-Hänga gubbe-projekt
-Av: Elisabeth och Sara
-:-) !!
+# Hangman
+First school project in JavaScript.
+Made by: Elisabeth och Sara
